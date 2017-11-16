@@ -28,7 +28,7 @@
 #define SISTEMA 1 // Windows
 #endif
 
-#define MAX_NOME 51
+#define MAX_NOME 50
 
 // A construção do registro (modelo).
 typedef struct {
@@ -51,6 +51,7 @@ void excluiFunc(int posRegFunc);
 void pausa();
 void limpaTela();
 void coloreTela();
+void excluirArquivo();
 
 /*
 Ajustes a serem feitos:
@@ -151,8 +152,8 @@ int main(){
 			break;
 
 			// Apaga fisicamente o arquivo.
-			case 6:
-				printf("\n\tEm desenvolvimento....  Voce vai desenvolver! :-)\n\n");
+			case 6:				
+        		excluirArquivo();
 			break;
 
 			default:
@@ -185,10 +186,30 @@ void limpaTela() {
 
 void pausa() {
 	if (SISTEMA == 0)
-		system("read -p \"Pressione <ENTER> para continuar\"");
+		system("read -p \"Pressione <ENTER> para continuar...\"");
 		//system("sleep 5 | echo Processando...");
 	else
 		system("pause");
+}
+
+void excluirArquivo() {
+
+	char op;
+	char nomeArq[] = "funcionarios.dat";
+	FILE *fp = fopen(nomeArq, "r");
+
+    if (fp == NULL) {
+        printf("\n\tDesculpe! O arquivo nao foi encontrado.\n");
+    } else {
+    	getchar();
+		printf("\n\tDeseja realmente excluir? (S=Sim/N=Nao): ");
+		scanf("%c", &op);
+
+		if ((op == 's') || (op == 'S')) {
+			remove(nomeArq);
+			printf("\n\tArquivo \"%s\" excluido! :-)\n\n", nomeArq);
+		}
+	}
 }
 
 // Monta o menu de opções.
