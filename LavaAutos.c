@@ -166,15 +166,18 @@ int main(){
 	return 0;
 }
 
+
 int validarOpcao(int opcao) {
     (opcao == 99 || opcao == 7 || opcao == -1) ? 0 : 1;
 }
 
+
+// Colore a tela do programa com fundo azul e texto em amarelo.		
 void coloreTela() {
-	// Colore a tela do programa com fundo azul e texto em amarelo.
 	if (SISTEMA == 1)
 		system("COLOR 1E");
 }
+
 
 void limpaTela() {
 	if (SISTEMA == 0)
@@ -285,9 +288,10 @@ void leDadosFunc(dados *funcLe){
 
 	getchar();
 	printf("\n\tDigite o nome: ");
-	fgets(funcLe->nome, MAX_NOME, stdin);
+	scanf("%50[^\n]s", funcLe->nome);
 	//gets(funcLe->nome); (DEPRECATED)
 
+	getchar();
 	printf("\n\tDigite a primeira letra do estado civil: ");
 	scanf("%c", &funcLe->estadoCivil);
 
@@ -376,7 +380,7 @@ int pesquisaFunc(){
 	// Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
 	getchar();
 	printf("\n\tDigite o nome do funcionario a ser pesquisado: ");
-	fgets(nomeAux, MAX_NOME, stdin); 
+	scanf("%50[^\n]s", nomeAux);
 	//gets(nomeAux); (DEPRECATED)
 
 	// Lê as informações do arquivo, para inicializar o laço.
@@ -497,7 +501,7 @@ void confirmaAlteracoes(dados *func){
 	if((op == 's') || (op == 'S')){
 		getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
 		printf("\tDigite o novo nome: ");
-		fgets(func->nome, MAX_NOME, stdin); // Altera o nome do funcionário.
+		scanf("%50[^\n]s", func->nome); // Altera o nome do funcionário.
 		// gets(func->nome); (DEPRECATED)
 	}
 
