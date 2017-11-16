@@ -13,6 +13,22 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<ctype.h>
+
+/** 
+ * Constante declarada para verificar qual é o sistema operacional utilizado.
+ * Usa-se 0 para Linux e 1 para Windows
+ * Ex.: #define SISTEMA 0 // Linux
+ */
+#ifdef __linux__
+#define SISTEMA 0 // Linux
+#endif
+
+#ifdef _WIN32
+#define SISTEMA 1 // Windows
+#endif
+
+#define MAX_NOME 51
 
 // A construção do registro (modelo).
 typedef struct {
@@ -32,6 +48,9 @@ void consultaFunc(int posRegFunc); // Acessa os dados de um funcionário específi
 void alteraFunc(int posRegFunc); // Altera os dados de um funcionário.
 void confirmaAlteracoes(dados *func); // Função que lê do usuários os campos a serem alterados.
 void excluiFunc(int posRegFunc);
+void pausa();
+void limpaTela();
+void coloreTela();
 
 /*
 Ajustes a serem feitos:
@@ -139,8 +158,8 @@ int main(){
 			default:
 				printf("\n\tObrigado por usar o sistema! Finalizando....\n\n");
 		}
-		system("pause");
-		system("cls");
+		pausa();
+		limpaTela();
 
 	}while(opcaoMenu != 0);
 	return 0;
@@ -150,12 +169,32 @@ int validarOpcao(int opcao) {
     (opcao == 99 || opcao == 7 || opcao == -1) ? 0 : 1;
 }
 
+void coloreTela() {
+	// Colore a tela do programa com fundo azul e texto em amarelo.
+	if (SISTEMA == 1)
+		system("COLOR 1E");
+}
+
+void limpaTela() {
+	if (SISTEMA == 0)
+		system("clear");
+	else
+		system("cls");
+}
+
+
+void pausa() {
+	if (SISTEMA == 0)
+		system("sleep 5 | echo Processando...");
+	else
+		system("pause");
+}
+
 // Monta o menu de opções.
 int menu(){
 	int opcao;
 
-	// Colore a tela do programa com fundo azul e texto em amarelo.
-	system("COLOR 1E");
+	coloreTela();
 
 	printf("\n\tMenu de Opcoes Sistema Lava Autos - Funcionarios");
 	printf("\n\t\t1 - Cadastrar");
@@ -168,10 +207,10 @@ int menu(){
 	printf("\n\tDigite a opcao desejada: ");
     scanf("%d", &opcao);
 
-    if (validarOpcao(opcao)) {
+    if (!validarOpcao(opcao)) {
         printf("\n\tOpcao nao eh valida\n\n");
-        system("pause");
-        system("cls");
+        pausa();
+        limpaTela();
         menu();
     }
 
@@ -222,9 +261,10 @@ void leDadosFunc(dados *funcLe){
 	printf("\n\tDigite a matricula: ");
 	scanf("%d", &funcLe->matricula);
 
-	fflush(stdin);
+	getchar();
 	printf("\n\tDigite o nome: ");
-	gets(funcLe->nome);
+	fgets(funcLe->nome, MAX_NOME, stdin);
+	//gets(funcLe->nome); (DEPRECATED)
 
 	printf("\n\tDigite a primeira letra do estado civil: ");
 	scanf("%c", &funcLe->estadoCivil);
@@ -312,9 +352,10 @@ int pesquisaFunc(){
 	}
 
 	// Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
-	fflush(stdin);
+	getchar();
 	printf("\n\tDigite o nome do funcionario a ser pesquisado: ");
-	gets(nomeAux);
+	fgets(nomeAux, MAX_NOME, stdin); 
+	//gets(nomeAux); (DEPRECATED)
 
 	// Lê as informações do arquivo, para inicializar o laço.
 	fread(&func, sizeof(func), 1, fp);
@@ -426,30 +467,31 @@ void confirmaAlteracoes(dados *func){
 		scanf("%d", &func->matricula); // Altera a matrícula do funcionário.
 	}
 
-	fflush(stdin); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
+	getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
 	printf("\n\tNome atual: %s", func->nome);
 	printf("\n\tDeseja alterar? (S=Sim/N=Nao): ");
-	fflush(stdin); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
+	getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
 	scanf("%c", &op);
 	if((op == 's') || (op == 'S')){
-		fflush(stdin); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
+		getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
 		printf("\tDigite o novo nome: ");
-		gets(func->nome); // Altera o nome do funcionário.
+		fgets(func->nome, MAX_NOME, stdin); // Altera o nome do funcionário.
+		// gets(func->nome); (DEPRECATED)
 	}
 
 	printf("\n\tEstado civil atual: %c", func->estadoCivil);
 	printf("\n\tDeseja alterar? (S=Sim/N=Nao): ");
-	fflush(stdin); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
+	getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
 	scanf("%c", &op);
 	if((op == 's') || (op == 'S')){
-		fflush(stdin); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
+		getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
 		printf("\tDigite o novo estado civil: ");
 		scanf("%c", &func->estadoCivil); // Altera o estado civil do funcionário.
 	}
 
 	printf("\n\tSalario atual: %0.2f", func->salario);
 	printf("\n\tDeseja alterar? (S=Sim/N=Nao): ");
-	fflush(stdin); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
+	getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
 	scanf("%c", &op);
 	if((op == 's') || (op == 'S')){
 		printf("\tDigite o novo salario: ");
