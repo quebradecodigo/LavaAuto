@@ -185,7 +185,8 @@ void limpaTela() {
 
 void pausa() {
 	if (SISTEMA == 0)
-		system("sleep 5 | echo Processando...");
+		system("read -p \"Pressione <ENTER> para continuar\"");
+		//system("sleep 5 | echo Processando...");
 	else
 		system("pause");
 }
