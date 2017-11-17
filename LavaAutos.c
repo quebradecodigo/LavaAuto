@@ -517,6 +517,7 @@ void confirmaAlteracoes(dados *func){
 	// Imprime as informações do registro pesquisado.
 	printf("\n\t###### Dados do funcionario a serem alterados ######");
 	printf("\n\tMatricula atual: %d", func->matricula);
+	getchar();
 	printf("\n\tDeseja alterar? (S=Sim/N=Nao): ");
 	scanf("%c", &op);
 	if((op == 's') || (op == 'S')){
@@ -527,7 +528,6 @@ void confirmaAlteracoes(dados *func){
 	getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
 	printf("\n\tNome atual: %s", func->nome);
 	printf("\n\tDeseja alterar? (S=Sim/N=Nao): ");
-	getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
 	scanf("%c", &op);
 	if((op == 's') || (op == 'S')){
 		getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
