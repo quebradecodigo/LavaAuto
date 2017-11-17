@@ -10,6 +10,13 @@
 		-> excluir o arquivo fisicamente. (VOCÊ VAI IMPLEMENTAR! :) )
 */
 
+/**
+ * PERFIS DE USUÁRIOS DO SISTEMA:
+ *	- Adminitrador
+ *	- Gerente 
+ *	- Operador
+ */
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -156,11 +163,11 @@ int main(){
         		excluirArquivo();
 			break;
 
-			case 666:
+			case 7:
 				restaurarBackup();
 			break;
 
-			case 999:
+			case 8:
 				realizarBackup();
 			break;
 
@@ -172,11 +179,6 @@ int main(){
 
 	}while(opcaoMenu != 0);
 	return 0;
-}
-
-
-int validarOpcao(int opcao) {
-    (opcao == 99 || opcao == 7 || opcao == -1) ? 0 : 1;
 }
 
 
@@ -286,18 +288,13 @@ int menu(){
 	printf("\n\t\t4 - Pesquisar");
 	printf("\n\t\t5 - Imprimir Arquivo");
 	printf("\n\t\t6 - Apagar Arquivo");
-	printf("\n\t\t666 - Restaurar Backup");
-	printf("\n\t\t999 - Realizar Backup");
+	printf("\n\t\t7 - Restaurar Backup");
+	printf("\n\t\t8 - Realizar Backup");
 	printf("\n\t\t0 - Sair");
 	printf("\n\tDigite a opcao desejada: ");
     scanf("%d", &opcao);
 
-    if (!validarOpcao(opcao)) {
-        printf("\n\tOpcao nao eh valida\n\n");
-        pausa();
-        limpaTela();
-        menu();
-    }
+    limpaTela();
 
 	return opcao;
 }
