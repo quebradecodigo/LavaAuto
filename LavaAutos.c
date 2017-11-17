@@ -1,17 +1,17 @@
 /*
-	ExercÌcio:
-	Elabore um programa em C que armazene em arquivo bin·rio os dados dos
-	funcion·rios da empresa Lava Autos.
- 	Este programa deve permitir ao usu·rio:
-		-> cadastrar novos funcion·rios; (implementado!)
+	Exerc√≠cio:
+	Elabore um programa em C que armazene em arquivo bin√°rio os dados dos
+	funcion√°rios da empresa Lava Autos.
+ 	Este programa deve permitir ao usu√°rio:
+		-> cadastrar novos funcion√°rios; (implementado!)
 		-> alterar dados dos registros no arquivo; (implementado!)
-		-> pesquisar, por nome, se um funcion·rio est· cadastrado; (implementado! MAS VOC  VAI MELHOR¡-LO :) )
-		-> excluir o registro de um funcion·rio; (implementado, mas vamos pensar! :) )
-		-> excluir o arquivo fisicamente. (VOC  VAI IMPLEMENTAR! :) )
+		-> pesquisar, por nome, se um funcion√°rio est√° cadastrado; (implementado! MAS VOC√ä VAI MELHOR√Å-LO :) )
+		-> excluir o registro de um funcion√°rio; (implementado, mas vamos pensar! :) )
+		-> excluir o arquivo fisicamente. (VOC√ä VAI IMPLEMENTAR! :) )
 */
 
 /**
- * PERFIS DE USU¡RIOS DO SISTEMA:
+ * PERFIS DE USU√ÅRIOS DO SISTEMA:
  *	- Adminitrador
  *	- Gerente 
  *	- Operador
@@ -23,7 +23,7 @@
 #include<ctype.h>
 
 /** 
- * Constante declarada para verificar qual È o sistema operacional utilizado.
+ * Constante declarada para verificar qual √© o sistema operacional utilizado.
  * Usa-se 0 para Linux e 1 para Windows
  * Ex.: #define SISTEMA 0 // Linux
  */
@@ -35,7 +35,7 @@
 #define SISTEMA 1 // Windows
 #endif
 
-// A construÁ„o do registro (modelo).
+// A constru√ß√£o do registro (modelo).
 typedef struct {
 	int matricula, status;
 	char estadoCivil;
@@ -43,15 +43,24 @@ typedef struct {
 	float salario;
 }dados;
 
-// ProtÛtipo das funÁıes.
-int menu();  // Apresenta o menu de opÁıes do programa.
-int cadastraFunc(); // Cadastra dados do funcion·rio no arquivo fÌsico.
-void leDadosFunc(dados *funcLe); // LÍ os dados do funcion·rio para serem gravados no arquivo.
-int imprimeFunc(); // Imprime os dados dos funcion·rios cadastrados no arquivo.
-int pesquisaFunc(); // Verifica se um funcion·rio est· cadastrado, retornando a posiÁ„o do registro no arquivo.
-void consultaFunc(int posRegFunc); // Acessa os dados de um funcion·rio especÌfico.
-void alteraFunc(int posRegFunc); // Altera os dados de um funcion·rio.
-void confirmaAlteracoes(dados *func); // FunÁ„o que lÍ do usu·rios os campos a serem alterados.
+typedef struct {
+	int nivel;
+	char usuario;
+	char senha;
+}login;
+//1 = Administrador
+//2 = Gerente
+//3 = Operador
+
+// Prot√≥tipo das fun√ß√µes.
+int menu();  // Apresenta o menu de op√ß√µes do programa.
+int cadastraFunc(); // Cadastra dados do funcion√°rio no arquivo f√≠sico.
+void leDadosFunc(dados *funcLe); // L√™ os dados do funcion√°rio para serem gravados no arquivo.
+int imprimeFunc(); // Imprime os dados dos funcion√°rios cadastrados no arquivo.
+int pesquisaFunc(); // Verifica se um funcion√°rio est√° cadastrado, retornando a posi√ß√£o do registro no arquivo.
+void consultaFunc(int posRegFunc); // Acessa os dados de um funcion√°rio espec√≠fico.
+void alteraFunc(int posRegFunc); // Altera os dados de um funcion√°rio.
+void confirmaAlteracoes(dados *func); // Fun√ß√£o que l√™ do usu√°rios os campos a serem alterados.
 void excluiFunc(int posRegFunc);
 void pausa();
 void limpaTela();
@@ -62,28 +71,28 @@ void restaurarBackup();
 
 /*
 Ajustes a serem feitos:
-    - Pesquisa n„o exata
-    - Exclus„o
-    - ImportaÁ„o de dados
-    - Perfil de usu·rios
+    - Pesquisa n√£o exata
+    - Exclus√£o
+    - Importa√ß√£o de dados
+    - Perfil de usu√°rios
     - Backup e restore
 */
 
-// Fim do protÛtipo das funÁıes.
+// Fim do prot√≥tipo das fun√ß√µes.
 
-// DeclaraÁ„o das funÁıes.
+// Declara√ß√£o das fun√ß√µes.
 int main(){
 	int opcaoMenu, resp, pos;
 
-	// LaÁo que mantÈm o programa em execuÁ„o, com opÁıes de menu para o usu·rio.
+	// La√ßo que mant√©m o programa em execu√ß√£o, com op√ß√µes de menu para o usu√°rio.
 	do{
-		// Imprime o menu na tela e lÍ a opÁ„o escolhida pelo usu·rio.
+		// Imprime o menu na tela e l√™ a op√ß√£o escolhida pelo usu√°rio.
 		opcaoMenu = menu();
 
-		// Chama a funÁ„o de acordo com a opÁ„o digitada pelo usu·rio.
+		// Chama a fun√ß√£o de acordo com a op√ß√£o digitada pelo usu√°rio.
 		switch(opcaoMenu){
 
-			// Cadastra um funcion·rio.
+			// Cadastra um funcion√°rio.
 			case 1:
 				resp = cadastraFunc();
 
@@ -97,7 +106,7 @@ int main(){
 				}
 			break;
 
-			// Altera dados de um funcion·rio.
+			// Altera dados de um funcion√°rio.
 			case 2:
 				pos = pesquisaFunc();
 				// Verifica se o arquivo foi aberto corretamente.
@@ -113,7 +122,7 @@ int main(){
 				}
 			break;
 
-			// Exclui dados de um funcion·rio.
+			// Exclui dados de um funcion√°rio.
 			case 3:
 				pos = pesquisaFunc();
 				// Verifica se o arquivo foi aberto corretamente.
@@ -130,7 +139,7 @@ int main(){
 				}
 			break;
 
-			// Pesquisa dados de um funcion·rio.
+			// Pesquisa dados de um funcion√°rio.
 			case 4:
 				pos = pesquisaFunc();
 				// Verifica se o arquivo foi aberto corretamente.
@@ -229,15 +238,15 @@ void excluirArquivo() {
 
 void realizarBackup() {
 
-	// Vari·vel do tipo registro que recebe os dados de cada funcion·rio, gravados no arquivo.
+	// Vari√°vel do tipo registro que recebe os dados de cada funcion√°rio, gravados no arquivo.
 	dados func;
 
 	// Ponteiro para o arquivo.
 	FILE *fp = fopen("funcionarios.dat", "rb");
 
-	// Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da funÁ„o.
+	// Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da fun√ß√£o.
 	if(fp == NULL){
-		return; // OperaÁ„o de abertura do arquivo N√O foi realizada com sucesso.
+		return; // Opera√ß√£o de abertura do arquivo N√ÉO foi realizada com sucesso.
 	}
 
 	char nomeArq[] = "funcionarios_bkp.dat";
@@ -254,15 +263,15 @@ void realizarBackup() {
 
 void restaurarBackup() {
 
-	// Vari·vel do tipo registro que recebe os dados de cada funcion·rio, gravados no arquivo.
+	// Vari√°vel do tipo registro que recebe os dados de cada funcion√°rio, gravados no arquivo.
 	dados func;
 
 	// Ponteiro para o arquivo.
 	FILE *fbkp = fopen("funcionarios_bkp.dat", "rb");
 
-	// Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da funÁ„o.
+	// Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da fun√ß√£o.
 	if(fbkp == NULL){
-		return; // OperaÁ„o de abertura do arquivo N√O foi realizada com sucesso.
+		return; // Opera√ß√£o de abertura do arquivo N√ÉO foi realizada com sucesso.
 	}
 
 	FILE *fp = fopen("funcionarios.dat", "wb");
@@ -275,7 +284,7 @@ void restaurarBackup() {
 
 }
 
-// Monta o menu de opÁıes.
+// Monta o menu de op√ß√µes.
 int menu(){
 	int opcao;
 
@@ -299,15 +308,15 @@ int menu(){
 	return opcao;
 }
 
-// Abre o arquivo de funcion·rios, de acordo com o modo recebido como par‚metro.
+// Abre o arquivo de funcion√°rios, de acordo com o modo recebido como par√¢metro.
 FILE *abrirArquivo(char *modo){
 	FILE *fp = fopen("funcionarios.dat", modo);
     return fp;
 }
 
-// Cadastra um registro de funcion·rio.
+// Cadastra um registro de funcion√°rio.
 int cadastraFunc(){
-	// DeclaraÁ„o da vari·vel do tipo registro.
+	// Declara√ß√£o da vari√°vel do tipo registro.
 	dados func;
 
 	// Ponteiro para o arquivo.
@@ -316,30 +325,30 @@ int cadastraFunc(){
 	// Define o modo de abertura do arquivo.
 	char modo[] = "a+b";
 
-	// Abre o arquivo bin·rio para leitura e gravaÁ„o.
+	// Abre o arquivo bin√°rio para leitura e grava√ß√£o.
 	fp = abrirArquivo(modo);
 
-	// Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da funÁ„o.
+	// Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da fun√ß√£o.
 	if(fp == NULL){
-		return 0; // OperaÁ„o de abertura/criaÁ„o do arquivo N√O foi realizada com sucesso.
+		return 0; // Opera√ß√£o de abertura/cria√ß√£o do arquivo N√ÉO foi realizada com sucesso.
 	}
 
 	// Faz a leitura dos dados a serem cadastrados.
 	leDadosFunc(&func);
 
-	// Grava as informaÁıes no arquivo.
+	// Grava as informa√ß√µes no arquivo.
 	fwrite(&func, sizeof(func), 1, fp);
 
 	// Fecha o arquivo.
 	fclose(fp);
 
-	// OperaÁ„o realizada com sucesso.
+	// Opera√ß√£o realizada com sucesso.
 	return 1;
 }
 
-// FunÁ„o que lÍ os dados do usu·rio para serem gravados no arquivo.
+// Fun√ß√£o que l√™ os dados do usu√°rio para serem gravados no arquivo.
 void leDadosFunc(dados *funcLe){
-	// Lendo informaÁıes de um funcion·rio.
+	// Lendo informa√ß√µes de um funcion√°rio.
 	printf("\n\tDigite a matricula: ");
 	scanf("%d", &funcLe->matricula);
 
@@ -359,12 +368,12 @@ void leDadosFunc(dados *funcLe){
 	funcLe->status = 1;
 }
 
-// FunÁ„o que imprime os dados de todos os funcion·rios cadastrados.
+// Fun√ß√£o que imprime os dados de todos os funcion√°rios cadastrados.
 int imprimeFunc(){
-	// Vari·vel que conta o n˙mero de registros.
+	// Vari√°vel que conta o n√∫mero de registros.
 	int qtdeReg = 0;
 
-	// Vari·vel do tipo registro que recebe os dados de cada funcion·rio, gravados no arquivo.
+	// Vari√°vel do tipo registro que recebe os dados de cada funcion√°rio, gravados no arquivo.
 	dados func;
 
 	// Ponteiro para o arquivo.
@@ -373,21 +382,21 @@ int imprimeFunc(){
 	// Define o modo de abertura do arquivo.
 	char modo[] = "rb";
 
-	// Abre o arquivo bin·rio para leitura.
+	// Abre o arquivo bin√°rio para leitura.
 	fp = abrirArquivo(modo);
 
-	// Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da funÁ„o.
+	// Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da fun√ß√£o.
 	if(fp == NULL){
-		return 0; // OperaÁ„o de abertura do arquivo N√O foi realizada com sucesso.
+		return 0; // Opera√ß√£o de abertura do arquivo N√ÉO foi realizada com sucesso.
 	}
 
-	// LÍ as informaÁıes do arquivo, para inicializar o laÁo.
+	// L√™ as informa√ß√µes do arquivo, para inicializar o la√ßo.
 	fread(&func, sizeof(func), 1, fp);
 
-	// LaÁo de leitura do arquivo. Pode-se usar o do..while tambÈm!
+	// La√ßo de leitura do arquivo. Pode-se usar o do..while tamb√©m!
 	while(!feof(fp)){
 		if(func.status == 1){
-			// Imprime as informaÁıes dos registros ativos no sistema.
+			// Imprime as informa√ß√µes dos registros ativos no sistema.
 			printf("\n\n\t###### Dados do %do funcionario ######", ++qtdeReg);
 			printf("\n\t\tMatricula: %d", func.matricula);
 			printf("\n\t\tNome: %s", func.nome);
@@ -395,43 +404,43 @@ int imprimeFunc(){
 			printf("\n\t\tSalario: %0.2f\n\n", func.salario);
 		}
 
-		// LÍ as informaÁıes do prÛximo registro no arquivo, enquanto n„o se chegar ao final do arquivo.
+		// L√™ as informa√ß√µes do pr√≥ximo registro no arquivo, enquanto n√£o se chegar ao final do arquivo.
 		fread(&func, sizeof(func), 1, fp);
 	}
 
-	// Fecha o arquivo apÛs as operaÁıes.
+	// Fecha o arquivo ap√≥s as opera√ß√µes.
 	fclose(fp);
 
-	// OperaÁ„o realizada com sucesso.
+	// Opera√ß√£o realizada com sucesso.
 	return 1;
 }
 
-// FunÁ„o que pesquisa, por nome, se existe o registro de determinado funcion·rio no arquivo.
+// Fun√ß√£o que pesquisa, por nome, se existe o registro de determinado funcion√°rio no arquivo.
 int pesquisaFunc(){
-	// Vari·vel auxiliar que indica se o registro procurado existe no arquivo.
+	// Vari√°vel auxiliar que indica se o registro procurado existe no arquivo.
 	int achou = -1;
 
-	// Vari·vel que armazena a posiÁ„o do registro procurado dentro do arquivo.
+	// Vari√°vel que armazena a posi√ß√£o do registro procurado dentro do arquivo.
 	int posRegFunc = 0;
 
-	// Vari·vel do tipo registro que recebe os dados de cada funcion·rio, gravados no arquivo.
+	// Vari√°vel do tipo registro que recebe os dados de cada funcion√°rio, gravados no arquivo.
 	dados func;
 
-	// Vari·vel auxiliar que recebe o nome a ser pesquisado no arquivo.
+	// Vari√°vel auxiliar que recebe o nome a ser pesquisado no arquivo.
 	char nomeAux[51];
 
-	// Ponteiro para o arquivo fÌsico.
+	// Ponteiro para o arquivo f√≠sico.
 	FILE *fp;
 
 	// Define o modo de abertura do arquivo.
 	char modo[] = "rb";
 
-	// Abre o arquivo bin·rio para leitura.
+	// Abre o arquivo bin√°rio para leitura.
 	fp = abrirArquivo(modo);
 
-	// Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da funÁ„o.
+	// Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da fun√ß√£o.
 	if(fp == NULL){
-		return 0; // OperaÁ„o de abertura do arquivo N√O foi realizada com sucesso.
+		return 0; // Opera√ß√£o de abertura do arquivo N√ÉO foi realizada com sucesso.
 	}
 
 	// Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
@@ -440,16 +449,16 @@ int pesquisaFunc(){
 	scanf("%50[^\n]s", nomeAux);
 	//gets(nomeAux); (DEPRECATED)
 
-	// LÍ as informaÁıes do arquivo, para inicializar o laÁo.
+	// L√™ as informa√ß√µes do arquivo, para inicializar o la√ßo.
 	fread(&func, sizeof(func), 1, fp);
 
-	// LaÁo de leitura do arquivo.
+	// La√ßo de leitura do arquivo.
 	while(!feof(fp) && (achou == -1)){
 		if( (strcmp(func.nome, nomeAux) == 0) && (func.status == 1) ){
 			achou = 1;
 		}
 
-		// LÍ as informaÁıes do prÛximo registro no arquivo.
+		// L√™ as informa√ß√µes do pr√≥ximo registro no arquivo.
 		fread(&func, sizeof(func), 1, fp);
 
 		if(achou == -1){
@@ -461,86 +470,86 @@ int pesquisaFunc(){
 		return -1;
 	}
 
-	// Fecha o arquivo apÛs as operaÁıes.
+	// Fecha o arquivo ap√≥s as opera√ß√µes.
 	fclose(fp);
 
-	// Retorna a posiÁ„o do registro procurado no arquivo.
+	// Retorna a posi√ß√£o do registro procurado no arquivo.
 	return posRegFunc;
 }
 
-// FunÁ„o que imprime os dados de um registro que foi consultado e existe no arquivo.
+// Fun√ß√£o que imprime os dados de um registro que foi consultado e existe no arquivo.
 void consultaFunc(int posRegFunc){
-	// Vari·vel que conta o n˙mero de registros.
+	// Vari√°vel que conta o n√∫mero de registros.
 	int qtdeReg = 0;
 
-	// Vari·vel do tipo registro que recebe os dados de cada funcion·rio, gravados no arquivo.
+	// Vari√°vel do tipo registro que recebe os dados de cada funcion√°rio, gravados no arquivo.
 	dados func;
 
-	// Ponteiro para o arquivo fÌsico.
+	// Ponteiro para o arquivo f√≠sico.
 	FILE *fp;
 
 	// Define o modo de abertura do arquivo.
 	char modo[] = "r+b";
 
-	// Abre o arquivo bin·rio para leitura.
+	// Abre o arquivo bin√°rio para leitura.
 	fp = abrirArquivo(modo);
 
-	// Acessa o registro especÌfico, com base na posiÁ„o recebida pela funÁ„o.
+	// Acessa o registro espec√≠fico, com base na posi√ß√£o recebida pela fun√ß√£o.
 	fseek(fp, posRegFunc * sizeof(func), SEEK_SET);
 
-	// LÍ as informaÁıes do arquivo, para inicializar o laÁo.
+	// L√™ as informa√ß√µes do arquivo, para inicializar o la√ßo.
 	fread(&func, sizeof(func), 1, fp);
 
-	// Imprime as informaÁıes do registro pesquisado.
+	// Imprime as informa√ß√µes do registro pesquisado.
 	printf("\n\t###### Dados do funcionario pesquisado ######");
 	printf("\n\t\tMatricula: %d", func.matricula);
 	printf("\n\t\tNome: %s", func.nome);
 	printf("\n\t\tEstado civil: %c", func.estadoCivil);
 	printf("\n\t\tSalario: %0.2f\n\n", func.salario);
 
-	// Fecha o arquivo apÛs as operaÁıes.
+	// Fecha o arquivo ap√≥s as opera√ß√µes.
 	fclose(fp);
 }
 
-// FunÁ„o que permite alterar os dados de um registro do arquivo.
+// Fun√ß√£o que permite alterar os dados de um registro do arquivo.
 void alteraFunc(int posRegFunc){
-	// Vari·vel do tipo registro que recebe os dados de cada funcion·rio, gravados no arquivo.
+	// Vari√°vel do tipo registro que recebe os dados de cada funcion√°rio, gravados no arquivo.
 	dados func;
 
-	// Ponteiro para o arquivo fÌsico.
+	// Ponteiro para o arquivo f√≠sico.
 	FILE *fp;
 
 	// Define o modo de abertura do arquivo.
 	char modo[] = "r+b";
 
-	// Abre o arquivo bin·rio para leitura e escrita.
+	// Abre o arquivo bin√°rio para leitura e escrita.
 	fp = abrirArquivo(modo);
 
-	// Acessa o registro especÌfico, com base na posiÁ„o recebida pela funÁ„o.
+	// Acessa o registro espec√≠fico, com base na posi√ß√£o recebida pela fun√ß√£o.
 	fseek(fp, posRegFunc * sizeof(func), SEEK_SET);
 
-	// LÍ as informaÁıes do registro a ser alterado.
+	// L√™ as informa√ß√µes do registro a ser alterado.
 	fread(&func, sizeof(func), 1, fp);
 
-	// FunÁ„o auxiliar que realiza as alteraÁıes no registro.
+	// Fun√ß√£o auxiliar que realiza as altera√ß√µes no registro.
 	confirmaAlteracoes(&func);
 
-	// Acessa o registro especÌfico, para atualiz·-lo.
+	// Acessa o registro espec√≠fico, para atualiz√°-lo.
 	fseek(fp, posRegFunc * sizeof(func), SEEK_SET);
 
-	// Grava as informaÁıes do registro apÛs as alteraÁıes.
+	// Grava as informa√ß√µes do registro ap√≥s as altera√ß√µes.
 	fwrite(&func, sizeof(func), 1, fp);
 
-	// Fecha o arquivo apÛs as operaÁıes.
+	// Fecha o arquivo ap√≥s as opera√ß√µes.
 	fclose(fp);
 }
 
-// FunÁ„o que lÍ do usu·rios os campos a serem alterados.
+// Fun√ß√£o que l√™ do usu√°rios os campos a serem alterados.
 void confirmaAlteracoes(dados *func){
-	// Vari·vel auxiliar para confirmar alteraÁ„o de cada campo.
+	// Vari√°vel auxiliar para confirmar altera√ß√£o de cada campo.
 	char op;
 
-	// Imprime as informaÁıes do registro pesquisado.
+	// Imprime as informa√ß√µes do registro pesquisado.
 	printf("\n\t###### Dados do funcionario a serem alterados ######");
 	printf("\n\tMatricula atual: %d", func->matricula);
 	getchar();
@@ -548,7 +557,7 @@ void confirmaAlteracoes(dados *func){
 	scanf("%c", &op);
 	if((op == 's') || (op == 'S')){
 		printf("\tDigite a nova matricula: ");
-		scanf("%d", &func->matricula); // Altera a matrÌcula do funcion·rio.
+		scanf("%d", &func->matricula); // Altera a matr√≠cula do funcion√°rio.
 	}
 
 	getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
@@ -558,7 +567,7 @@ void confirmaAlteracoes(dados *func){
 	if((op == 's') || (op == 'S')){
 		getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
 		printf("\tDigite o novo nome: ");
-		scanf("%50[^\n]s", func->nome); // Altera o nome do funcion·rio.
+		scanf("%50[^\n]s", func->nome); // Altera o nome do funcion√°rio.
 		// gets(func->nome); (DEPRECATED)
 	}
 
@@ -569,7 +578,7 @@ void confirmaAlteracoes(dados *func){
 	if((op == 's') || (op == 'S')){
 		getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
 		printf("\tDigite o novo estado civil: ");
-		scanf("%c", &func->estadoCivil); // Altera o estado civil do funcion·rio.
+		scanf("%c", &func->estadoCivil); // Altera o estado civil do funcion√°rio.
 	}
 
 	printf("\n\tSalario atual: %0.2f", func->salario);
@@ -578,39 +587,39 @@ void confirmaAlteracoes(dados *func){
 	scanf("%c", &op);
 	if((op == 's') || (op == 'S')){
 		printf("\tDigite o novo salario: ");
-		scanf("%f", &func->salario); // Altera o sal·rio do funcion·rio.
+		scanf("%f", &func->salario); // Altera o sal√°rio do funcion√°rio.
 	}
 }
 
-// FunÁ„o que altera o valor do campo status para zero ("exclui")
+// Fun√ß√£o que altera o valor do campo status para zero ("exclui")
 void excluiFunc(int posRegFunc){
-	// Vari·vel do tipo registro que recebe os dados de cada funcion·rio, gravados no arquivo.
+	// Vari√°vel do tipo registro que recebe os dados de cada funcion√°rio, gravados no arquivo.
 	dados func;
 
-	// Ponteiro para o arquivo fÌsico.
+	// Ponteiro para o arquivo f√≠sico.
 	FILE *fp;
 
 	// Define o modo de abertura do arquivo.
 	char modo[] = "r+b";
 
-	// Abre o arquivo bin·rio para leitura e escrita.
+	// Abre o arquivo bin√°rio para leitura e escrita.
 	fp = abrirArquivo(modo);
 
-	// Acessa o registro especÌfico, com base na posiÁ„o recebida pela funÁ„o.
+	// Acessa o registro espec√≠fico, com base na posi√ß√£o recebida pela fun√ß√£o.
 	fseek(fp, posRegFunc * sizeof(func), SEEK_SET);
 
-	// LÍ as informaÁıes do registro a ser alterado.
+	// L√™ as informa√ß√µes do registro a ser alterado.
 	fread(&func, sizeof(func), 1, fp);
 
 	// Altera o campo status para zero, "excluindo" o registro.
 	func.status = 0;
 
-	// Acessa o registro especÌfico, para atualiz·-lo.
+	// Acessa o registro espec√≠fico, para atualiz√°-lo.
 	fseek(fp, posRegFunc * sizeof(func), SEEK_SET);
 
-	// Grava as informaÁıes do registro apÛs as alteraÁıes.
+	// Grava as informa√ß√µes do registro ap√≥s as altera√ß√µes.
 	fwrite(&func, sizeof(func), 1, fp);
 
-	// Fecha o arquivo apÛs as operaÁıes.
+	// Fecha o arquivo ap√≥s as opera√ß√µes.
 	fclose(fp);
 }
