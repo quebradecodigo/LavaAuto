@@ -51,6 +51,7 @@ void limpaTela();
 void coloreTela();
 void excluirArquivo();
 void realizarBackup();
+void restaurarBackup();
 
 /*
 Ajustes a serem feitos:
@@ -155,6 +156,10 @@ int main(){
         		excluirArquivo();
 			break;
 
+			case 666:
+				restaurarBackup();
+			break;
+
 			case 999:
 				realizarBackup();
 			break;
@@ -245,6 +250,29 @@ void realizarBackup() {
 }
 
 
+void restaurarBackup() {
+
+	// Variável do tipo registro que recebe os dados de cada funcionário, gravados no arquivo.
+	dados func;
+
+	// Ponteiro para o arquivo.
+	FILE *fbkp = fopen("funcionarios_bkp.dat", "rb");
+
+	// Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
+	if(fbkp == NULL){
+		return; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
+	}
+
+	FILE *fp = fopen("funcionarios.dat", "wb");
+
+	while (fread(&func, sizeof(func), 1, fbkp))
+		fwrite(&func, sizeof(func), 1, fp);
+
+	fclose(fbkp);
+	fclose(fp);
+
+}
+
 // Monta o menu de opções.
 int menu(){
 	int opcao;
@@ -258,6 +286,7 @@ int menu(){
 	printf("\n\t\t4 - Pesquisar");
 	printf("\n\t\t5 - Imprimir Arquivo");
 	printf("\n\t\t6 - Apagar Arquivo");
+	printf("\n\t\t666 - Restaurar Backup");
 	printf("\n\t\t999 - Realizar Backup");
 	printf("\n\t\t0 - Sair");
 	printf("\n\tDigite a opcao desejada: ");
