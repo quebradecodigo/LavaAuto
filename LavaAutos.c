@@ -45,8 +45,8 @@ typedef struct {
 
 typedef struct {
 	int nivel;
-	char usuario;
-	char senha;
+	char usuario[21];
+	char senha[21];
 }login;
 //1 = Administrador
 //2 = Gerente
