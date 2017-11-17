@@ -291,15 +291,15 @@ int menu(){
 	coloreTela();
 
 	printf("\n\tMenu de Opcoes Sistema Lava Autos - Funcionarios");
-	printf("\n\t\t1 - Cadastrar");
-	printf("\n\t\t2 - Alterar");
-	printf("\n\t\t3 - Excluir");
-	printf("\n\t\t4 - Pesquisar");
-	printf("\n\t\t5 - Imprimir Arquivo");
-	printf("\n\t\t6 - Apagar Arquivo");
-	printf("\n\t\t7 - Restaurar Backup");
-	printf("\n\t\t8 - Realizar Backup");
-	printf("\n\t\t0 - Sair");
+	printf("\n\t\t1 - Cadastrar");// 1 2
+	printf("\n\t\t2 - Alterar");// 1 2
+	printf("\n\t\t3 - Excluir");// 1 2
+	printf("\n\t\t4 - Pesquisar");// 1 2 3
+	printf("\n\t\t5 - Imprimir Arquivo");// 1 2 3
+	printf("\n\t\t6 - Apagar Arquivo");// 1
+	printf("\n\t\t7 - Restaurar Backup");// 1
+	printf("\n\t\t8 - Realizar Backup");// 1
+	printf("\n\t\t0 - Sair");// 1 2 3
 	printf("\n\tDigite a opcao desejada: ");
     scanf("%d", &opcao);
 
