@@ -28,8 +28,6 @@
 #define SISTEMA 1 // Windows
 #endif
 
-#define MAX_NOME 50
-
 // A construção do registro (modelo).
 typedef struct {
 	int matricula, status;
@@ -52,6 +50,7 @@ void pausa();
 void limpaTela();
 void coloreTela();
 void excluirArquivo();
+void realizarBackup();
 
 /*
 Ajustes a serem feitos:
@@ -156,6 +155,10 @@ int main(){
         		excluirArquivo();
 			break;
 
+			case 999:
+				realizarBackup();
+			break;
+
 			default:
 				printf("\n\tObrigado por usar o sistema! Finalizando....\n\n");
 		}
@@ -195,6 +198,7 @@ void pausa() {
 		system("pause");
 }
 
+
 void excluirArquivo() {
 
 	char op;
@@ -215,6 +219,32 @@ void excluirArquivo() {
 	}
 }
 
+
+void realizarBackup() {
+
+	// Variável do tipo registro que recebe os dados de cada funcionário, gravados no arquivo.
+	dados func;
+
+	// Ponteiro para o arquivo.
+	FILE *fp = fopen("funcionarios.dat", "rb");
+
+	// Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
+	if(fp == NULL){
+		return; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
+	}
+
+	char nomeArq[] = "funcionarios_bkp.dat";
+	FILE *fbkp = fopen(nomeArq, "wb");
+
+	while (fread(&func, sizeof(func), 1, fp))
+		fwrite(&func, sizeof(func), 1, fbkp);
+
+	fclose(fp);
+	fclose(fbkp);
+
+}
+
+
 // Monta o menu de opções.
 int menu(){
 	int opcao;
@@ -228,6 +258,7 @@ int menu(){
 	printf("\n\t\t4 - Pesquisar");
 	printf("\n\t\t5 - Imprimir Arquivo");
 	printf("\n\t\t6 - Apagar Arquivo");
+	printf("\n\t\t999 - Realizar Backup");
 	printf("\n\t\t0 - Sair");
 	printf("\n\tDigite a opcao desejada: ");
     scanf("%d", &opcao);
