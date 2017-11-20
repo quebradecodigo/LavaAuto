@@ -10,7 +10,7 @@
 		-> excluir o arquivo fisicamente. (VOCÊ VAI IMPLEMENTAR! :) )
 */
 
-/**
+/*
  * PERFIS DE USUÁRIOS DO SISTEMA:
  *	- Adminitrador
  *	- Gerente
@@ -22,7 +22,7 @@
 #include<string.h>
 #include<ctype.h>
 
-/**
+/*
  * Constante declarada para verificar qual é o sistema operacional utilizado.
  * Usa-se 0 para Linux e 1 para Windows
  * Ex.: #define SISTEMA 0 // Linux
@@ -181,7 +181,7 @@ int main(){
 			break;
 
 			default:
-				printf("\n\tOpção invalida. Digite uma das opções acima!\n\n");
+				printf("\n\tObrigado por usar o sistema! Finalizando....\n\n");
 		}
 		pausa();
 		limpaTela();
@@ -190,6 +190,25 @@ int main(){
 	return 0;
 }
 
+
+
+void leUsuarios(){
+	// Variável do tipo registro que recebe os dados de cada funcionário, gravados no arquivo.
+	login loginU;
+
+	// Ponteiro para o arquivo.
+	FILE *fp = fopen("users.dat", "rb");
+
+	// Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
+	if(fp == NULL){
+		return; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
+	}
+
+	while (fread(&loginU, sizeof(login), 1, fp));
+	fclose(fp);
+  return login;
+
+}
 
 // Colore a tela do programa com fundo azul e texto em amarelo.
 void coloreTela() {
