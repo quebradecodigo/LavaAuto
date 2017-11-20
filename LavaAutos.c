@@ -191,20 +191,21 @@ int main(){
 }
 
 void loginUsers(){
-	char user[21], pass[21];
-	int verifica;
-	 printf("Digite seu Usuario: \n");
-	  scanf("%s", user);
-   printf("Digite sua Senha: \n");
-	  scanf("%s", pass);
-		
+  char user[21], pass[21];
+  int verifica;
+
+	printf("Digite seu Usuario: \n");
+  scanf("%s", user);
+  printf("Digite sua Senha: \n");
+  scanf("%s", pass);
+
   verifica = leUsuarios(user,pass);
 
-	if (verifica = 1) {
-	 }else{
-		 printf("Senha Errada !!\n");
-		 loginUsers();
-	 }
+  if (verifica = 1) {
+   }else{
+     printf("Senha Errada !!\n");
+     loginUsers();
+    }
 }
 
 int leUsuarios(char user, char pass){
