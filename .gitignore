@@ -52,6 +52,7 @@ Mkfile.old
 dkms.conf
 
 # Project Files
+users.dat
 funcionarios.dat
 LavaAutos
 funcionarios_bkp.dat
