@@ -36,16 +36,14 @@
 #endif
 
 // A construção do registro (modelo).
-typedef struct
-{
+typedef struct{
     int matricula, status;
     char estadoCivil;
     char nome[51];
     float salario;
 } dados;
 
-typedef struct
-{
+typedef struct{
     int nivel;
     char usuario[21];
     char senha[21];
@@ -86,22 +84,19 @@ Ajustes a serem feitos:
 // Fim do protótipo das funções.
 
 // Declaração das funções.
-int main()
-{
+int main(){
     int opcaoMenu, resp, pos;
     int nivel=0;
 
     // Laço que mantém o programa em execução, com opções de menu para o usuário.
     nivel = loginUsers(&nivel);
 
-    do
-    {
+    do{
         // Imprime o menu na tela e lê a opção escolhida pelo usuário.
         opcaoMenu = menu();
 
         // Chama a função de acordo com a opção digitada pelo usuário.
-        switch(opcaoMenu)
-        {
+        switch(opcaoMenu){
 
         // Cadastra um funcionário.
         case 1:
@@ -109,12 +104,9 @@ int main()
 
 
             // Verifica se o arquivo foi aberto corretamente.
-            if(resp)
-            {
+            if(resp){
                 printf("\n\tCadastro realizado com sucesso!!!\n\n");
-            }
-            else
-            {
+            }else{
                 printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
             }
             break;
@@ -123,17 +115,12 @@ int main()
         case 2:
             pos = pesquisaFunc();
             // Verifica se o arquivo foi aberto corretamente.
-            if (pos >= 0)
-            {
+            if (pos >= 0){
                 alteraFunc(pos);
                 printf("\n\tO registro foi alterado com sucesso!\n\n");
-            }
-            else if(pos == -1)
-            {
+            }else if(pos == -1){
                 printf("\n\tNao foi encontrado o funcionario no arquivo!\n\n");
-            }
-            else
-            {
+            }else{
                 printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
             }
             break;
@@ -142,18 +129,13 @@ int main()
         case 3:
             pos = pesquisaFunc();
             // Verifica se o arquivo foi aberto corretamente.
-            if (pos >= 0)
-            {
+            if (pos >= 0){
                 consultaFunc(pos);
                 excluiFunc(pos);
                 printf("\n\tO registro foi excluido com sucesso!\n\n");
-            }
-            else if(pos == -1)
-            {
+            }else if(pos == -1){
                 printf("\n\tNao foi encontrado o funcionario no arquivo!\n\n");
-            }
-            else
-            {
+            }else{
                 printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
             }
             break;
@@ -162,16 +144,11 @@ int main()
         case 4:
             pos = pesquisaFunc();
             // Verifica se o arquivo foi aberto corretamente.
-            if (pos >= 0)
-            {
+            if (pos >= 0){
                 consultaFunc(pos);
-            }
-            else if(pos == -1)
-            {
+            }else if(pos == -1){
                 printf("\n\tNao foi encontrado o funcionario no arquivo!\n\n");
-            }
-            else
-            {
+            }else{
                 printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
             }
             break;
@@ -181,12 +158,9 @@ int main()
             resp = imprimeFunc();
 
             // Verifica se o arquivo foi aberto corretamente.
-            if(resp)
-            {
+            if(resp){
                 printf("\n\tImpressao realizada com sucesso!!!\n\n");
-            }
-            else
-            {
+            }else{
                 printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
             }
             break;
@@ -216,13 +190,11 @@ int main()
         pausa();
         limpaTela();
 
-    }
-    while(opcaoMenu != 0);
+    }while(opcaoMenu != 0);
     return 0;
 }
 
-int loginUsers()
-{
+int loginUsers(){
     char user[21], pass[21];
     int verifica;
     int nivel2;
@@ -234,15 +206,12 @@ int loginUsers()
     scanf("%s", pass);
 
     verifica = leUsuarios(user,pass,&nivel2);
-    if (verifica == 1)
-    {
+    if (verifica == 1){
         printf("Bem Vindo!\n");
         pausa();
         limpaTela();
         return nivel2;
-    }
-    else
-    {
+    }else{
         printf("Senha Errada !!\n");
         pausa();
         limpaTela();
@@ -250,8 +219,7 @@ int loginUsers()
     }
 }
 
-void cadastroUsers()
-{
+void cadastroUsers(){
 
     login loginU;
     FILE *f = fopen("users.dat", "a+b");
@@ -274,8 +242,7 @@ void cadastroUsers()
 
 }
 
-int leUsuarios(char user[], char pass[], int *nivel)
-{
+int leUsuarios(char user[], char pass[], int *nivel){
     // Variável do tipo registro que recebe os dados de cada funcionário, gravados no arquivo.
     login loginU;
     int veri=0;
@@ -283,14 +250,11 @@ int leUsuarios(char user[], char pass[], int *nivel)
     FILE *fp = fopen("users.dat", "rb");
     //printf("%s %s\n",user,pass);
     // Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
-    if(fp == NULL)
-    {
+    if(fp == NULL){
         printf("Abertura do arquivo não foi realizada com sucesso!\n"); // Operação de abertura do arquivo NÃO foi realizada com sucesso.
     }
-    while (fread(&loginU, sizeof(login), 1, fp))
-    {
-        if((!strcmp(user, loginU.usuario)) && (!strcmp(pass,loginU.senha)))
-        {
+    while (fread(&loginU, sizeof(login), 1, fp)){
+        if((!strcmp(user, loginU.usuario)) && (!strcmp(pass,loginU.senha))){
             veri = 1;
             *nivel=loginU.nivel;
             return veri;
@@ -305,15 +269,13 @@ int leUsuarios(char user[], char pass[], int *nivel)
 
 
 // Colore a tela do programa com fundo azul e texto em amarelo.
-void coloreTela()
-{
+void coloreTela(){
     if (SISTEMA == 1)
         system("COLOR 1E");
 }
 
 
-void limpaTela()
-{
+void limpaTela(){
     if (SISTEMA == 0)
         system("clear");
     else
@@ -321,8 +283,7 @@ void limpaTela()
 }
 
 
-void pausa()
-{
+void pausa(){
     if (SISTEMA == 0)
         system("read -p \"Pressione <ENTER> para continuar...\"");
     //system("sleep 5 | echo Processando...");
@@ -331,25 +292,20 @@ void pausa()
 }
 
 
-void excluirArquivo()
-{
+void excluirArquivo(){
 
     char op;
     char nomeArq[] = "funcionarios.dat";
     FILE *fp = fopen(nomeArq, "r");
 
-    if (fp == NULL)
-    {
+    if (fp == NULL){
         printf("\n\tDesculpe! O arquivo nao foi encontrado.\n");
-    }
-    else
-    {
+    }else{
         getchar();
         printf("\n\tDeseja realmente excluir? (S=Sim/N=Nao): ");
         scanf("%c", &op);
 
-        if ((op == 's') || (op == 'S'))
-        {
+        if ((op == 's') || (op == 'S')){
             remove(nomeArq);
             printf("\n\tArquivo \"%s\" excluido! :-)\n\n", nomeArq);
         }
@@ -357,8 +313,7 @@ void excluirArquivo()
 }
 
 
-void realizarBackup()
-{
+void realizarBackup(){
 
     // Variável do tipo registro que recebe os dados de cada funcionário, gravados no arquivo.
     dados func;
@@ -367,8 +322,7 @@ void realizarBackup()
     FILE *fp = fopen("funcionarios.dat", "rb");
 
     // Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
-    if(fp == NULL)
-    {
+    if(fp == NULL){
         return; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
     }
 
@@ -384,8 +338,7 @@ void realizarBackup()
 }
 
 
-void restaurarBackup()
-{
+void restaurarBackup(){
 
     // Variável do tipo registro que recebe os dados de cada funcionário, gravados no arquivo.
     dados func;
@@ -394,8 +347,7 @@ void restaurarBackup()
     FILE *fbkp = fopen("funcionarios_bkp.dat", "rb");
 
     // Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
-    if(fbkp == NULL)
-    {
+    if(fbkp == NULL){
         return; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
     }
 
@@ -412,8 +364,7 @@ void restaurarBackup()
 // Monta o menu de opções.
 
 
-int menu()
-{
+int menu(){
     int opcao;
 
     coloreTela();
@@ -437,15 +388,13 @@ int menu()
 }
 
 // Abre o arquivo de funcionários, de acordo com o modo recebido como parâmetro.
-FILE *abrirArquivo(char *modo)
-{
+FILE *abrirArquivo(char *modo){
     FILE *fp = fopen("funcionarios.dat", modo);
     return fp;
 }
 
 // Cadastra um registro de funcionário.
-int cadastraFunc()
-{
+int cadastraFunc(){
     // Declaração da variável do tipo registro.
     dados func;
 
@@ -459,8 +408,7 @@ int cadastraFunc()
     fp = abrirArquivo(modo);
 
     // Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
-    if(fp == NULL)
-    {
+    if(fp == NULL){
         return 0; // Operação de abertura/criação do arquivo NÃO foi realizada com sucesso.
     }
 
@@ -478,8 +426,7 @@ int cadastraFunc()
 }
 
 // Função que lê os dados do usuário para serem gravados no arquivo.
-void leDadosFunc(dados *funcLe)
-{
+void leDadosFunc(dados *funcLe){
     // Lendo informações de um funcionário.
     printf("\n\tDigite a matricula: ");
     scanf("%d", &funcLe->matricula);
@@ -501,8 +448,7 @@ void leDadosFunc(dados *funcLe)
 }
 
 // Função que imprime os dados de todos os funcionários cadastrados.
-int imprimeFunc()
-{
+int imprimeFunc(){
     // Variável que conta o número de registros.
     int qtdeReg = 0;
 
@@ -519,8 +465,7 @@ int imprimeFunc()
     fp = abrirArquivo(modo);
 
     // Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
-    if(fp == NULL)
-    {
+    if(fp == NULL){
         return 0; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
     }
 
@@ -528,10 +473,8 @@ int imprimeFunc()
     fread(&func, sizeof(func), 1, fp);
 
     // Laço de leitura do arquivo. Pode-se usar o do..while também!
-    while(!feof(fp))
-    {
-        if(func.status == 1)
-        {
+    while(!feof(fp)){
+        if(func.status == 1){
             // Imprime as informações dos registros ativos no sistema.
             printf("\n\n\t###### Dados do %do funcionario ######", ++qtdeReg);
             printf("\n\t\tMatricula: %d", func.matricula);
@@ -552,8 +495,7 @@ int imprimeFunc()
 }
 
 // Função que pesquisa, por nome, se existe o registro de determinado funcionário no arquivo.
-int pesquisaFunc()
-{
+int pesquisaFunc(){
     // Variável auxiliar que indica se o registro procurado existe no arquivo.
     int achou = -1;
 
@@ -576,8 +518,7 @@ int pesquisaFunc()
     fp = abrirArquivo(modo);
 
     // Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
-    if(fp == NULL)
-    {
+    if(fp == NULL){
         return 0; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
     }
 
@@ -591,24 +532,20 @@ int pesquisaFunc()
     fread(&func, sizeof(func), 1, fp);
 
     // Laço de leitura do arquivo.
-    while(!feof(fp) && (achou == -1))
-    {
-        if( (strcmp(func.nome, nomeAux) == 0) && (func.status == 1) )
-        {
+    while(!feof(fp) && (achou == -1)){
+        if( (strcmp(func.nome, nomeAux) == 0) && (func.status == 1) ){
             achou = 1;
         }
 
         // Lê as informações do próximo registro no arquivo.
         fread(&func, sizeof(func), 1, fp);
 
-        if(achou == -1)
-        {
+        if(achou == -1){
             posRegFunc++;
         }
     }
 
-    if(achou == -1)
-    {
+    if(achou == -1){
         return -1;
     }
 
@@ -620,8 +557,7 @@ int pesquisaFunc()
 }
 
 // Função que imprime os dados de um registro que foi consultado e existe no arquivo.
-void consultaFunc(int posRegFunc)
-{
+void consultaFunc(int posRegFunc){
     // Variável que conta o número de registros.
     int qtdeReg = 0;
 
@@ -655,8 +591,7 @@ void consultaFunc(int posRegFunc)
 }
 
 // Função que permite alterar os dados de um registro do arquivo.
-void alteraFunc(int posRegFunc)
-{
+void alteraFunc(int posRegFunc){
     // Variável do tipo registro que recebe os dados de cada funcionário, gravados no arquivo.
     dados func;
 
@@ -689,8 +624,7 @@ void alteraFunc(int posRegFunc)
 }
 
 // Função que lê do usuários os campos a serem alterados.
-void confirmaAlteracoes(dados *func)
-{
+void confirmaAlteracoes(dados *func){
     // Variável auxiliar para confirmar alteração de cada campo.
     char op;
 
@@ -700,8 +634,8 @@ void confirmaAlteracoes(dados *func)
     getchar();
     printf("\n\tDeseja alterar? (S=Sim/N=Nao): ");
     scanf("%c", &op);
-    if((op == 's') || (op == 'S'))
-    {
+
+    if((op == 's') || (op == 'S')){
         printf("\tDigite a nova matricula: ");
         scanf("%d", &func->matricula); // Altera a matrícula do funcionário.
     }
@@ -710,8 +644,8 @@ void confirmaAlteracoes(dados *func)
     printf("\n\tNome atual: %s", func->nome);
     printf("\n\tDeseja alterar? (S=Sim/N=Nao): ");
     scanf("%c", &op);
-    if((op == 's') || (op == 'S'))
-    {
+
+    if((op == 's') || (op == 'S')){
         getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
         printf("\tDigite o novo nome: ");
         scanf("%50[^\n]s", func->nome); // Altera o nome do funcionário.
@@ -722,8 +656,8 @@ void confirmaAlteracoes(dados *func)
     printf("\n\tDeseja alterar? (S=Sim/N=Nao): ");
     getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
     scanf("%c", &op);
-    if((op == 's') || (op == 'S'))
-    {
+
+    if((op == 's') || (op == 'S')){
         getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
         printf("\tDigite o novo estado civil: ");
         scanf("%c", &func->estadoCivil); // Altera o estado civil do funcionário.
@@ -733,16 +667,15 @@ void confirmaAlteracoes(dados *func)
     printf("\n\tDeseja alterar? (S=Sim/N=Nao): ");
     getchar(); // Limpa o buffer do teclado para evitar "saltos" na leitura de dados.
     scanf("%c", &op);
-    if((op == 's') || (op == 'S'))
-    {
+
+    if((op == 's') || (op == 'S')){
         printf("\tDigite o novo salario: ");
         scanf("%f", &func->salario); // Altera o salário do funcionário.
     }
 }
 
 // Função que altera o valor do campo status para zero ("exclui")
-void excluiFunc(int posRegFunc)
-{
+void excluiFunc(int posRegFunc){
     // Variável do tipo registro que recebe os dados de cada funcionário, gravados no arquivo.
     dados func;
 
