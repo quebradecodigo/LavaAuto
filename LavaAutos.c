@@ -68,6 +68,8 @@ void coloreTela();
 void excluirArquivo();
 void realizarBackup();
 void restaurarBackup();
+int leUsuarios(char user, char pass);
+void loginUsers();
 
 /*
 Ajustes a serem feitos:
