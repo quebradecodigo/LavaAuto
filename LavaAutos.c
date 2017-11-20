@@ -70,6 +70,7 @@ void realizarBackup();
 void restaurarBackup();
 int leUsuarios(char user[], char pass[]);
 void loginUsers();
+void cadastroUsers();
 
 /*
 Ajustes a serem feitos:
@@ -211,6 +212,29 @@ void loginUsers(){
      printf("Senha Errada !!\n");
      loginUsers();
     }
+}
+
+void cadastroUsers(){
+
+	login loginU;
+	FILE *f = fopen("users.dat", "wb+");
+
+	printf("Informe o nome de Usuario: \n");
+	scanf("%s",loginU.usuario);
+
+	printf("Informe a senha: \n");
+	scanf("%s",loginU.senha);
+
+	printf("Nivel de acesso 1 = Administrador - 2 = Gerente - 3 = Operador: \n");
+	scanf("%d", &loginU.nivel);
+
+	//1 = Administrador
+	//2 = Gerente
+	//3 = Operador
+
+	fwrite(&loginU, sizeof(login), 1, f);
+	fclose(f);
+
 }
 
 int leUsuarios(char user[], char pass[]){
