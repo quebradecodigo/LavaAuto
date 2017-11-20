@@ -205,7 +205,7 @@ void loginUsers(){
 
   verifica = leUsuarios(user,pass);
 
-  if (verifica = 1) {
+  if (verifica == 1) {
 		printf("Bem Vindo!\n");
    }else{
      printf("Senha Errada !!\n");
@@ -223,7 +223,7 @@ int leUsuarios(char user[], char pass[]){
 	// Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
 	if(fp == NULL){
 		printf("Abertura do arquivo não foi realizada com sucesso!\n"); // Operação de abertura do arquivo NÃO foi realizada com sucesso.
-	}else{
+	}
 		while (fread(&loginU, sizeof(login), 1, fp)){
 				if((strcmp(user, loginU.usuario) && strcmp(pass,loginU.senha)) == 0){
 					veri = 1;
@@ -236,7 +236,7 @@ int leUsuarios(char user[], char pass[]){
 
 		fclose(fp);
  }
-}
+
 
 // Colore a tela do programa com fundo azul e texto em amarelo.
 void coloreTela() {
