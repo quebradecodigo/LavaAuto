@@ -10,7 +10,7 @@
 		-> excluir o arquivo fisicamente. (VOCÊ VAI IMPLEMENTAR! :) )
 */
 
-/*
+/**
  * PERFIS DE USUÁRIOS DO SISTEMA:
  *	- Adminitrador
  *	- Gerente
@@ -22,7 +22,7 @@
 #include<string.h>
 #include<ctype.h>
 
-/*
+/**
  * Constante declarada para verificar qual é o sistema operacional utilizado.
  * Usa-se 0 para Linux e 1 para Windows
  * Ex.: #define SISTEMA 0 // Linux
@@ -181,7 +181,7 @@ int main(){
 			break;
 
 			default:
-				printf("\n\tObrigado por usar o sistema! Finalizando....\n\n");
+				printf("\n\tOpção invalida. Digite uma das opções acima!\n\n");
 		}
 		pausa();
 		limpaTela();
