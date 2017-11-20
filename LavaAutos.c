@@ -91,6 +91,9 @@ int main(){
     int nivel=0;
 
     // Laço que mantém o programa em execução, com opções de menu para o usuário.
+    //Casso não tenha o arquivo de usuarios comente o codigo dentro de Main e uso somente essa linha para cadastrar usuarios!
+    //cadastroUsers();
+
     nivel = loginUsers(&nivel);
 
     do{
