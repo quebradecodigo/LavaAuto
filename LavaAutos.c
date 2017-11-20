@@ -68,8 +68,8 @@ void coloreTela();
 void excluirArquivo();
 void realizarBackup();
 void restaurarBackup();
-int leUsuarios(char user[], char pass[]);
-void loginUsers();
+int leUsuarios(char user[], char pass[], int *nivel);
+int loginUsers();
 void cadastroUsers();
 
 /*
@@ -86,9 +86,10 @@ Ajustes a serem feitos:
 // Declaração das funções.
 int main(){
 	int opcaoMenu, resp, pos;
+	int nivel=0;
 
 	// Laço que mantém o programa em execução, com opções de menu para o usuário.
-	loginUsers();
+	nivel = loginUsers(&nivel);
 
 	do{
 		// Imprime o menu na tela e lê a opção escolhida pelo usuário.
@@ -185,6 +186,12 @@ int main(){
 				realizarBackup();
 			break;
 
+			case 0:
+       limpaTela();
+			 printf("Saindo!!!\n");
+			 pausa();
+			 return 0;
+
 			default:
         printf("\n\tOpção invalida. Digite uma das opções acima!\n\n");
 		}
@@ -195,21 +202,27 @@ int main(){
 	return 0;
 }
 
-void loginUsers(){
+int loginUsers(){
   char user[21], pass[21];
   int verifica;
+	int nivel2;
 
+	limpaTela();
 	printf("Digite seu Usuario: \n");
   scanf("%s", user);
   printf("Digite sua Senha: \n");
   scanf("%s", pass);
 
-  verifica = leUsuarios(user,pass);
-
+  verifica = leUsuarios(user,pass,&nivel2);
   if (verifica == 1) {
 		printf("Bem Vindo!\n");
+		pausa();
+		limpaTela();
+		return nivel2;
    }else{
      printf("Senha Errada !!\n");
+		 pausa();
+		 limpaTela();
      loginUsers();
     }
 }
@@ -217,7 +230,7 @@ void loginUsers(){
 void cadastroUsers(){
 
 	login loginU;
-	FILE *f = fopen("users.dat", "wb+");
+	FILE *f = fopen("users.dat", "a+b");
 
 	printf("Informe o nome de Usuario: \n");
 	scanf("%s",loginU.usuario);
@@ -237,20 +250,21 @@ void cadastroUsers(){
 
 }
 
-int leUsuarios(char user[], char pass[]){
+int leUsuarios(char user[], char pass[], int *nivel){
 	// Variável do tipo registro que recebe os dados de cada funcionário, gravados no arquivo.
 	login loginU;
 	int veri=0;
 	// Ponteiro para o arquivo.
 	FILE *fp = fopen("users.dat", "rb");
-	printf("%s %s\n",user,pass);
+	//printf("%s %s\n",user,pass);
 	// Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
 	if(fp == NULL){
 		printf("Abertura do arquivo não foi realizada com sucesso!\n"); // Operação de abertura do arquivo NÃO foi realizada com sucesso.
 	}
 		while (fread(&loginU, sizeof(login), 1, fp)){
-				if((strcmp(user, loginU.usuario) && strcmp(pass,loginU.senha)) == 0){
+				if((!strcmp(user, loginU.usuario)) && (!strcmp(pass,loginU.senha))){
 					veri = 1;
+					*nivel=loginU.nivel;
 					return veri;
 				}
 		}
@@ -356,6 +370,8 @@ void restaurarBackup() {
 }
 
 // Monta o menu de opções.
+
+
 int menu(){
 	int opcao;
 
