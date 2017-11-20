@@ -185,7 +185,7 @@ int main(){
 			break;
 
 			default:
-				printf("\n\tObrigado por usar o sistema! Finalizando....\n\n");
+        printf("\n\tOpção invalida. Digite uma das opções acima!\n\n");
 		}
 		pausa();
 		limpaTela();
