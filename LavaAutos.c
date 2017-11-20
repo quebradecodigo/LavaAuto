@@ -68,7 +68,7 @@ void coloreTela();
 void excluirArquivo();
 void realizarBackup();
 void restaurarBackup();
-int leUsuarios(char user, char pass);
+int leUsuarios(char user[], char pass[]);
 void loginUsers();
 
 /*
@@ -87,6 +87,8 @@ int main(){
 	int opcaoMenu, resp, pos;
 
 	// Laço que mantém o programa em execução, com opções de menu para o usuário.
+	loginUsers();
+
 	do{
 		// Imprime o menu na tela e lê a opção escolhida pelo usuário.
 		opcaoMenu = menu();
@@ -204,33 +206,36 @@ void loginUsers(){
   verifica = leUsuarios(user,pass);
 
   if (verifica = 1) {
+		printf("Bem Vindo!\n");
    }else{
      printf("Senha Errada !!\n");
      loginUsers();
     }
 }
 
-int leUsuarios(char user, char pass){
+int leUsuarios(char user[], char pass[]){
 	// Variável do tipo registro que recebe os dados de cada funcionário, gravados no arquivo.
 	login loginU;
-
+	int veri=0;
 	// Ponteiro para o arquivo.
 	FILE *fp = fopen("users.dat", "rb");
-
+	printf("%s %s\n",user,pass);
 	// Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
 	if(fp == NULL){
-		return; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
-	}
+		printf("Abertura do arquivo não foi realizada com sucesso!\n"); // Operação de abertura do arquivo NÃO foi realizada com sucesso.
+	}else{
+		while (fread(&loginU, sizeof(login), 1, fp)){
+				if((strcmp(user, loginU.usuario) && strcmp(pass,loginU.senha)) == 0){
+					veri = 1;
+					return veri;
+				}
+		}
 
-	while (fread(&loginU, sizeof(login), 1, fp)){
-			if(user == loginU.usuario && pass == loginU.senha){
-				return 1;
-			}
-	}
+		veri = 0;
+		return veri;
 
-	fclose(fp);
-  return 0;
-
+		fclose(fp);
+ }
 }
 
 // Colore a tela do programa com fundo azul e texto em amarelo.
