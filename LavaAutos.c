@@ -190,9 +190,22 @@ int main(){
 	return 0;
 }
 
+void loginUsers(){
+	char user[21], pass[21];
+	int verifica;
+	printf("Digite seu Usuario: \n");
+	scanf("%s", user);
+  printf("Digite sua Senha: \n");
+	scanf("%s", pass);
+  verifica = leUsuarios(user,pass);
+	if (verifica = 1) {
+	}else{
+		printf("Senha Errada !!\n");
+		loginUsers();
+	}
+}
 
-
-void leUsuarios(){
+int leUsuarios(char user, char pass){
 	// Variável do tipo registro que recebe os dados de cada funcionário, gravados no arquivo.
 	login loginU;
 
@@ -204,9 +217,14 @@ void leUsuarios(){
 		return; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
 	}
 
-	while (fread(&loginU, sizeof(login), 1, fp));
+	while (fread(&loginU, sizeof(login), 1, fp)){
+			if(user == loginU.usuario && pass == loginU.senha){
+				return 1;
+			}
+	}
+
 	fclose(fp);
-  return login;
+  return 0;
 
 }
 
