@@ -10,10 +10,10 @@
 		-> excluir o arquivo fisicamente. (VOCÊ VAI IMPLEMENTAR! :) )
 */
 
-/**
+/*
  * PERFIS DE USUÁRIOS DO SISTEMA:
  *	- Adminitrador
- *	- Gerente 
+ *	- Gerente
  *	- Operador
  */
 
@@ -22,7 +22,7 @@
 #include<string.h>
 #include<ctype.h>
 
-/** 
+/*
  * Constante declarada para verificar qual é o sistema operacional utilizado.
  * Usa-se 0 para Linux e 1 para Windows
  * Ex.: #define SISTEMA 0 // Linux
@@ -168,7 +168,7 @@ int main(){
 			break;
 
 			// Apaga fisicamente o arquivo.
-			case 6:				
+			case 6:
         		excluirArquivo();
 			break;
 
@@ -191,7 +191,7 @@ int main(){
 }
 
 
-// Colore a tela do programa com fundo azul e texto em amarelo.		
+// Colore a tela do programa com fundo azul e texto em amarelo.
 void coloreTela() {
 	if (SISTEMA == 1)
 		system("COLOR 1E");
