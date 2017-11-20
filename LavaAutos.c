@@ -53,7 +53,9 @@ typedef struct{
 //3 = Operador
 
 // Protótipo das funções.
-int menu();  // Apresenta o menu de opções do programa.
+int menuAdministrador();  // Apresenta o menu de opções do programa.
+int menuGerente();  // Apresenta o menu de opções do programa.
+int menuOperador();  // Apresenta o menu de opções do programa.
 int cadastraFunc(); // Cadastra dados do funcionário no arquivo físico.
 void leDadosFunc(dados *funcLe); // Lê os dados do funcionário para serem gravados no arquivo.
 int imprimeFunc(); // Imprime os dados dos funcionários cadastrados no arquivo.
@@ -90,11 +92,233 @@ int main(){
     int nivel=0;
 
     // Laço que mantém o programa em execução, com opções de menu para o usuário.
+    //Casso não tenha o arquivo de usuarios comente o codigo dentro de Main e uso somente essa linha para cadastrar usuarios!
+    //cadastroUsers();
+
     nivel = loginUsers(&nivel);
 
     do{
         // Imprime o menu na tela e lê a opção escolhida pelo usuário.
-        opcaoMenu = menu();
+        if(nivel == 1){
+          opcaoMenu = menuAdministrador();
+          switch(opcaoMenu){
+
+          // Cadastra um funcionário.
+          case 1:
+              resp = cadastraFunc();
+
+
+              // Verifica se o arquivo foi aberto corretamente.
+              if(resp){
+                  printf("\n\tCadastro realizado com sucesso!!!\n\n");
+              }else{
+                  printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+              }
+              break;
+
+          // Altera dados de um funcionário.
+          case 2:
+              pos = pesquisaFunc();
+              // Verifica se o arquivo foi aberto corretamente.
+              if (pos >= 0){
+                  alteraFunc(pos);
+                  printf("\n\tO registro foi alterado com sucesso!\n\n");
+              }else if(pos == -1){
+                  printf("\n\tNao foi encontrado o funcionario no arquivo!\n\n");
+              }else{
+                  printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+              }
+              break;
+
+          // Exclui dados de um funcionário.
+          case 3:
+              pos = pesquisaFunc();
+              // Verifica se o arquivo foi aberto corretamente.
+              if (pos >= 0){
+                  consultaFunc(pos);
+                  excluiFunc(pos);
+                  printf("\n\tO registro foi excluido com sucesso!\n\n");
+              }else if(pos == -1){
+                  printf("\n\tNao foi encontrado o funcionario no arquivo!\n\n");
+              }else{
+                  printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+              }
+              break;
+
+          // Pesquisa dados de um funcionário.
+          case 4:
+              pos = pesquisaFunc();
+              // Verifica se o arquivo foi aberto corretamente.
+              if (pos >= 0){
+                  consultaFunc(pos);
+              }else if(pos == -1){
+                  printf("\n\tNao foi encontrado o funcionario no arquivo!\n\n");
+              }else{
+                  printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+              }
+              break;
+
+          // Imprime todos os registros do arquivo.
+          case 5:
+              resp = imprimeFunc();
+
+              // Verifica se o arquivo foi aberto corretamente.
+              if(resp){
+                  printf("\n\tImpressao realizada com sucesso!!!\n\n");
+              }else{
+                  printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+              }
+              break;
+
+          // Apaga fisicamente o arquivo.
+          case 6:
+              excluirArquivo();
+              break;
+
+          case 7:
+              restaurarBackup();
+              break;
+
+          case 8:
+              realizarBackup();
+              break;
+          case 9:
+              cadastroUsers();
+              break;
+
+            case 10:
+                importarDados();
+                break;
+
+          case 0:
+              limpaTela();
+              printf("Saindo!!!\n");
+              pausa();
+              return 0;
+
+          default:
+              printf("\n\tOpção invalida. Digite uma das opções acima!\n\n");
+          }
+        }else if(nivel == 2){
+          opcaoMenu = menuGerente();
+          switch(opcaoMenu){
+
+          // Cadastra um funcionário.
+          case 1:
+              resp = cadastraFunc();
+
+
+              // Verifica se o arquivo foi aberto corretamente.
+              if(resp){
+                  printf("\n\tCadastro realizado com sucesso!!!\n\n");
+              }else{
+                  printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+              }
+              break;
+
+          // Altera dados de um funcionário.
+          case 2:
+              pos = pesquisaFunc();
+              // Verifica se o arquivo foi aberto corretamente.
+              if (pos >= 0){
+                  alteraFunc(pos);
+                  printf("\n\tO registro foi alterado com sucesso!\n\n");
+              }else if(pos == -1){
+                  printf("\n\tNao foi encontrado o funcionario no arquivo!\n\n");
+              }else{
+                  printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+              }
+              break;
+
+          // Exclui dados de um funcionário.
+          case 3:
+              pos = pesquisaFunc();
+              // Verifica se o arquivo foi aberto corretamente.
+              if (pos >= 0){
+                  consultaFunc(pos);
+                  excluiFunc(pos);
+                  printf("\n\tO registro foi excluido com sucesso!\n\n");
+              }else if(pos == -1){
+                  printf("\n\tNao foi encontrado o funcionario no arquivo!\n\n");
+              }else{
+                  printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+              }
+              break;
+
+          // Pesquisa dados de um funcionário.
+          case 4:
+              pos = pesquisaFunc();
+              // Verifica se o arquivo foi aberto corretamente.
+              if (pos >= 0){
+                  consultaFunc(pos);
+              }else if(pos == -1){
+                  printf("\n\tNao foi encontrado o funcionario no arquivo!\n\n");
+              }else{
+                  printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+              }
+              break;
+
+          // Imprime todos os registros do arquivo.
+          case 5:
+              resp = imprimeFunc();
+
+              // Verifica se o arquivo foi aberto corretamente.
+              if(resp){
+                  printf("\n\tImpressao realizada com sucesso!!!\n\n");
+              }else{
+                  printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+              }
+              break;
+
+          case 0:
+              limpaTela();
+              printf("Saindo!!!\n");
+              pausa();
+              return 0;
+
+          default:
+              printf("\n\tOpção invalida. Digite uma das opções acima!\n\n");
+          }
+        }else{
+          opcaoMenu = menuOperador();
+          switch(opcaoMenu){
+          // Pesquisa dados de um funcionário.
+          case 4:
+              pos = pesquisaFunc();
+              // Verifica se o arquivo foi aberto corretamente.
+              if (pos >= 0){
+                  consultaFunc(pos);
+              }else if(pos == -1){
+                  printf("\n\tNao foi encontrado o funcionario no arquivo!\n\n");
+              }else{
+                  printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+              }
+              break;
+
+          // Imprime todos os registros do arquivo.
+          case 5:
+              resp = imprimeFunc();
+
+              // Verifica se o arquivo foi aberto corretamente.
+              if(resp){
+                  printf("\n\tImpressao realizada com sucesso!!!\n\n");
+              }else{
+                  printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+              }
+              break;
+
+          case 0:
+              limpaTela();
+              printf("Saindo!!!\n");
+              pausa();
+              return 0;
+
+          default:
+              printf("\n\tOpção invalida. Digite uma das opções acima!\n\n");
+          }
+
+          }
+
 
         // Chama a função de acordo com a opção digitada pelo usuário.
         switch(opcaoMenu){
@@ -192,6 +416,7 @@ int main(){
         default:
             printf("\n\tOpção invalida. Digite uma das opções acima!\n\n");
         }
+        
         pausa();
         limpaTela();
 
@@ -393,14 +618,49 @@ void restaurarBackup(){
 }
 
 // Monta o menu de opções.
-
-
-int menu(){
+int menuGerente(){
     int opcao;
 
     coloreTela();
 
-    printf("\n\tMenu de Opcoes Sistema Lava Autos - Funcionarios");
+    printf("\n\tMenu de Opcoes Sistema Lava Autos - Gerente");
+    printf("\n\t\t1 - Cadastrar");// 1 2
+    printf("\n\t\t2 - Alterar");// 1 2
+    printf("\n\t\t3 - Excluir");// 1 2
+    printf("\n\t\t4 - Pesquisar");// 1 2 3
+    printf("\n\t\t5 - Imprimir Arquivo");// 1 2 3
+    printf("\n\t\t0 - Sair");// 1 2 3
+    printf("\n\tDigite a opcao desejada: ");
+    scanf("%d", &opcao);
+
+    limpaTela();
+
+    return opcao;
+}
+
+int menuOperador(){
+    int opcao;
+
+    coloreTela();
+
+    printf("\n\tMenu de Opcoes Sistema Lava Autos - Operador");
+    printf("\n\t\t4 - Pesquisar");// 1 2 3
+    printf("\n\t\t5 - Imprimir Arquivo");// 1 2 3
+    printf("\n\t\t0 - Sair");// 1 2 3
+    printf("\n\tDigite a opcao desejada: ");
+    scanf("%d", &opcao);
+
+    limpaTela();
+
+    return opcao;
+}
+
+int menuAdministrador(){
+    int opcao;
+
+    coloreTela();
+
+    printf("\n\tMenu de Opcoes Sistema Lava Autos - Administrador");
     printf("\n\t\t1 - Cadastrar");// 1 2
     printf("\n\t\t2 - Alterar");// 1 2
     printf("\n\t\t3 - Excluir");// 1 2
@@ -409,6 +669,7 @@ int menu(){
     printf("\n\t\t6 - Apagar Arquivo");// 1
     printf("\n\t\t7 - Restaurar Backup");// 1
     printf("\n\t\t8 - Realizar Backup");// 1
+    printf("\n\t\t9 - Cadastrar Usuarios");// 1
     printf("\n\t\t0 - Sair");// 1 2 3
     printf("\n\tDigite a opcao desejada: ");
     scanf("%d", &opcao);
