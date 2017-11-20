@@ -71,6 +71,7 @@ void restaurarBackup();
 int leUsuarios(char user[], char pass[], int *nivel);
 int loginUsers();
 void cadastroUsers();
+int importarDados();
 
 /*
 Ajustes a serem feitos:
@@ -178,6 +179,10 @@ int main(){
             realizarBackup();
             break;
 
+        case 9:
+            importarDados();
+            break;
+
         case 0:
             limpaTela();
             printf("Saindo!!!\n");
@@ -266,6 +271,32 @@ int leUsuarios(char user[], char pass[], int *nivel){
 
     fclose(fp);
 }
+
+
+/**
+ * função para importar dados de arquivo TXT
+ */
+int importarDados() {
+
+    char nome[21];
+    char linha[80];
+
+    //getchar();
+    //printf("Informe o nome do arquivo TXT para a importação:\n");
+    //scanf("%20[^\n]", &nome); 
+
+    FILE *fi = fopen("dados-importaveis.txt", "r");
+
+    while (fgets(linha,sizeof(dados), fi)) {
+        printf("MATRICULA = %s\n", strtok(linha, ";"));
+        printf("STATUS = %s\n", strtok(NULL, ";"));
+        printf("NOME = %s\n", strtok(NULL, ";"));
+        printf("ESTADO CIVIL = %s\n", strtok(NULL, ";"));
+        printf("SALARIO = %s\n", strtok(NULL, ";"));
+        printf("-----------------------------------------------\n");
+    }
+
+} 
 
 
 // Colore a tela do programa com fundo azul e texto em amarelo.
