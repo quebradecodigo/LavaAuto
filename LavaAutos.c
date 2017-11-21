@@ -106,15 +106,15 @@ int main(){
 
     do{
         // Imprime o menu na tela e lê a opção escolhida pelo usuário.
-          
+
         opcaoMenu = menu(&nivel);
-                  
+
         switch(opcaoMenu) {
 
             // Cadastra um funcionário.
             case 1:
 
-                if (nivel == 1 || nivel == 2) {            
+                if (nivel == 1 || nivel == 2) {
                     resp = cadastraFunc();
 
                     // Verifica se o arquivo foi aberto corretamente.
@@ -132,7 +132,7 @@ int main(){
             // Altera dados de um funcionário.
             case 2:
 
-                if (nivel == 1 || nivel == 2) {  
+                if (nivel == 1 || nivel == 2) {
                     pos = pesquisaFunc();
                     // Verifica se o arquivo foi aberto corretamente.
                     if (pos >= 0){
@@ -152,7 +152,7 @@ int main(){
             // Exclui dados de um funcionário.
             case 3:
 
-                if (nivel == 1 || nivel == 2) { 
+                if (nivel == 1 || nivel == 2) {
                     pos = pesquisaFunc();
                     // Verifica se o arquivo foi aberto corretamente.
                     if (pos >= 0){
@@ -197,7 +197,7 @@ int main(){
 
         // Apaga fisicamente o arquivo.
         case 6:
-            if (nivel == 1) { 
+            if (nivel == 1) {
                 excluirArquivo();
             } else {
                 printf("Acesso negado!\n");
@@ -205,7 +205,7 @@ int main(){
         break;
 
         case 7:
-            if (nivel == 1) { 
+            if (nivel == 1) {
                 restaurarBackup();
             } else {
                 printf("Acesso negado!\n");
@@ -213,7 +213,7 @@ int main(){
         break;
 
         case 8:
-            if (nivel == 1) { 
+            if (nivel == 1) {
                 realizarBackup();
             } else {
                 printf("Acesso negado!\n");
@@ -232,7 +232,7 @@ int main(){
                 importarDados();
             } else {
                 printf("Acesso negado!\n");
-            }            
+            }
         break;
 
         case 0:
@@ -246,7 +246,7 @@ int main(){
         }
 
     } while(opcaoMenu != 0);
-    
+
     return 0;
 }
 
@@ -364,7 +364,7 @@ int importarDados() {
         printf("NOME = %s\n", func.nome);
         printf("ESTADO CIVIL = %c\n", func.estadoCivil);
         printf("SALARIO = %f\n", func.salario);
-        
+
         // Grava as informações no arquivo.
         fwrite(&func, sizeof(dados), 1, fp);
     }
@@ -445,11 +445,11 @@ int realizarBackup(){
     fseek(fp, 0, SEEK_END);
     tam = ftell(fp);
     rewind(fp);
-    
+
     if(tam == 0){
       printf("Arquivo de funcionarios vazio!\n");
       return 0;
-    }    
+    }
 
     while(fread(&func, sizeof(dados), 1, fp)) {
         fwrite(&func, sizeof(dados), 1, fbkp);
@@ -459,8 +459,8 @@ int realizarBackup(){
     fseek(fbkp, 0, SEEK_END);
 
     if(ftell(fbkp) == 0) {
-        printf("Erro ao realizar backup!\n");  
-        return 0;     
+        printf("Erro ao realizar backup!\n");
+        return 0;
     }
 
     fclose(fp);
@@ -486,7 +486,9 @@ void restaurarBackup(){
         return; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
     }
 
+    fseek(fbkp, 0, SEEK_END);
     tam = ftell(fbkp);
+    rewind(fbkp);
 
     if(tam == 0){
       printf("Arquivo de Backup vazio!\n");
@@ -498,10 +500,12 @@ void restaurarBackup(){
         fwrite(&func, sizeof(func), 1, fp);
 
     tam = ftell(fp);
+    fseek(fp, 0, SEEK_END);
 
-    if(tam == 0)
-      printf("Erro ao realizar a restauracao!\n");
-      else
+    if(ftell(fp) == 0) {
+        printf("Erro ao realizar backup!\n");
+        return 0;
+    } else
         printf("Restauracao realizada com sucesso!\n");
 
     fclose(fbkp);
@@ -544,7 +548,7 @@ int menu(int *nivel) {
         printf("\n\t\t 5 - Imprimir Arquivo");
         printf("\n\t\t 0 - Sair");
     }
-    
+
     printf("\n\tDigite a opcao desejada: ");
     scanf("%d", &opcao);
 
