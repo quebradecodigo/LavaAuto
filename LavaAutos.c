@@ -416,7 +416,7 @@ int main(){
         default:
             printf("\n\tOpção invalida. Digite uma das opções acima!\n\n");
         }
-        
+
         pausa();
         limpaTela();
 
@@ -508,7 +508,7 @@ int importarDados() {
 
     //getchar();
     //printf("Informe o nome do arquivo TXT para a importação:\n");
-    //scanf("%20[^\n]", &nome); 
+    //scanf("%20[^\n]", &nome);
 
     FILE *fi = fopen("dados-importaveis.txt", "r");
 
@@ -521,7 +521,7 @@ int importarDados() {
         printf("-----------------------------------------------\n");
     }
 
-} 
+}
 
 
 // Colore a tela do programa com fundo azul e texto em amarelo.
@@ -568,25 +568,36 @@ void excluirArquivo(){
     }
 }
 
-
 void realizarBackup(){
 
     // Variável do tipo registro que recebe os dados de cada funcionário, gravados no arquivo.
     dados func;
+    int tam;
 
     // Ponteiro para o arquivo.
     FILE *fp = fopen("funcionarios.dat", "rb");
 
     // Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
     if(fp == NULL){
+        printf("Arquivo de funcionarios nao existe!\n");
         return; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
     }
+    tam = ftell(fp);
+    if(tam == 0)
+      printf("Arquivo de funcionarios vazio!\n");
 
     char nomeArq[] = "funcionarios_bkp.dat";
     FILE *fbkp = fopen(nomeArq, "wb");
 
-    while (fread(&func, sizeof(func), 1, fp))
+    while (fread(&func, sizeof(func), 1, fp)){
         fwrite(&func, sizeof(func), 1, fbkp);
+    }
+    tam = ftell(fbkp);
+
+    if(tam == 0)
+      printf("Erro ao realizar backup!\n");
+     else
+        printf("Backup realizado com sucesso!\n");
 
     fclose(fp);
     fclose(fbkp);
@@ -594,23 +605,38 @@ void realizarBackup(){
 }
 
 
+
 void restaurarBackup(){
 
     // Variável do tipo registro que recebe os dados de cada funcionário, gravados no arquivo.
     dados func;
-
+    int tam;
+    char nomeArq[] = "funcionarios_bkp.dat";
     // Ponteiro para o arquivo.
-    FILE *fbkp = fopen("funcionarios_bkp.dat", "rb");
+    FILE *fbkp = fopen(nomeArq, "rb");
 
     // Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
     if(fbkp == NULL){
+      printf("Arquivo de backup nao existe!\n");
         return; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
     }
+
+    tam = ftell(fbkp);
+
+    if(tam == 0)
+      printf("Arquivo de Backup vazio!\n");
 
     FILE *fp = fopen("funcionarios.dat", "wb");
 
     while (fread(&func, sizeof(func), 1, fbkp))
         fwrite(&func, sizeof(func), 1, fp);
+
+    tam = ftell(fp);
+
+    if(tam == 0)
+      printf("Erro ao realizar a restauracao!\n");
+      else
+        printf("Restauracao realizada com sucesso!\n");
 
     fclose(fbkp);
     fclose(fp);
