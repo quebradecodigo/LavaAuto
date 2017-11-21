@@ -95,7 +95,7 @@ int main(){
     //Casso não tenha o arquivo de usuarios comente o codigo dentro de Main e uso somente essa linha para cadastrar usuarios!
     //cadastroUsers();
 
-    nivel = loginUsers(&nivel);
+    nivel = loginUsers();
 
     do{
         // Imprime o menu na tela e lê a opção escolhida pelo usuário.
