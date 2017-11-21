@@ -353,7 +353,7 @@ int importarDados() {
 
         sscanf(strtok(linha, ";"), "%d", &func.matricula);
         sscanf(strtok(NULL, ";"), "%d", &func.status);
-        sscanf(strtok(NULL, ";"), "%s", func.nome);
+        strcpy(func.nome, strtok(NULL, ";"));
         sscanf(strtok(NULL, ";"), "%c", &func.estadoCivil);
         sscanf(strtok(NULL, ";"), "%f", &func.salario);
 
