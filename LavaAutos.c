@@ -35,6 +35,14 @@
 #define SISTEMA 1 // Windows
 #endif
 
+
+/*
+ * Constante DESENVOLVIMENTO declarada para verificar se o sistema está em faze de desenvolvimento.
+ * Usa-se 0 para falso e 1 para verdadeiro
+ * Ex.: #define SISTEMA 0 // Linux
+ */
+#define DESENVOLVIMENTO 1 
+
 // A construção do registro (modelo).
 typedef struct{
     int matricula, status;
@@ -89,13 +97,16 @@ Ajustes a serem feitos:
 // Declaração das funções.
 int main(){
     int opcaoMenu, resp, pos;
-    int nivel=0;
+    int nivel=1;
 
     // Laço que mantém o programa em execução, com opções de menu para o usuário.
     //Casso não tenha o arquivo de usuarios comente o codigo dentro de Main e uso somente essa linha para cadastrar usuarios!
     //cadastroUsers();
 
-    nivel = loginUsers();
+    if (!DESENVOLVIMENTO) {
+        nivel = loginUsers();
+    }
+    
 
     do{
         // Imprime o menu na tela e lê a opção escolhida pelo usuário.
@@ -506,21 +517,53 @@ int importarDados() {
 
     char nome[21];
     char linha[80];
+    dados func;
 
     //getchar();
     //printf("Informe o nome do arquivo TXT para a importação:\n");
     //scanf("%20[^\n]", &nome);
 
+    // Ponteiros para os arquivos.
+    FILE *fp = fopen("funcionarios.dat", "a+b");
     FILE *fi = fopen("dados-importaveis.txt", "r");
 
-    while (fgets(linha,sizeof(dados), fi)) {
-        printf("MATRICULA = %s\n", strtok(linha, ";"));
-        printf("STATUS = %s\n", strtok(NULL, ";"));
-        printf("NOME = %s\n", strtok(NULL, ";"));
-        printf("ESTADO CIVIL = %s\n", strtok(NULL, ";"));
-        printf("SALARIO = %s\n", strtok(NULL, ";"));
-        printf("-----------------------------------------------\n");
+    // Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
+    if(fp == NULL || fi == NULL){
+        return 0; // Operação de abertura/criação do arquivo NÃO foi realizada com sucesso.
     }
+
+    fseek(fp, 0, SEEK_END);
+
+    // Faz a leitura dos dados a serem cadastrados.
+    while (fgets(linha,sizeof(dados), fi)) {
+
+        sscanf (strtok(linha, ";"), "%d", &func.matricula);
+
+        //func.matricula = strtok(linha, ";");
+        //func.status = strtok(NULL, ";");
+        //func.nome = strtok(NULL, ";");
+        //func.estadoCivil = strtok(NULL, ";");
+        //func.salario = strtok(NULL, ";");
+
+        // exibe na tela os dados dos funcionarios importados
+        printf("-----------------------------------------------\n");
+        printf("MATRICULA = %d\n", func.matricula);
+        printf("STATUS = %d\n", func.status);
+        printf("NOME = %s\n", func.nome);
+        printf("ESTADO CIVIL = %c\n", func.estadoCivil);
+        printf("SALARIO = %f\n", func.salario);
+        
+        // Grava as informações no arquivo.
+        fwrite(&func, sizeof(func), 1, fp);
+    }
+
+
+    // Fecha os arquivos.
+    fclose(fp);
+    fclose(fi);
+
+    // Operação realizada com sucesso.
+    return 1;
 
 }
 
