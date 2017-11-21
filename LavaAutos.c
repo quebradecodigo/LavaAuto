@@ -38,9 +38,9 @@
 /*
  * Constante DESENVOLVIMENTO declarada para verificar se o sistema está em fase de desenvolvimento.
  * Usa-se 0 para falso e 1 para verdadeiro
- * Ex.: #define SISTEMA 0 // Linux
+ * Ex.: #define DESENVOLVIMENTO 1 // projeto em fase de desenvolvimento
  */
-#define DESENVOLVIMENTO 0 
+#define DESENVOLVIMENTO 1
 
 // A construção do registro (modelo).
 typedef struct{
@@ -351,13 +351,11 @@ int importarDados() {
     // Faz a leitura dos dados a serem cadastrados.
     while (fgets(linha,sizeof(dados), fi)) {
 
-        sscanf (strtok(linha, ";"), "%d", &func.matricula);
-
-        //func.matricula = strtok(linha, ";");
-        //func.status = strtok(NULL, ";");
-        //func.nome = strtok(NULL, ";");
-        //func.estadoCivil = strtok(NULL, ";");
-        //func.salario = strtok(NULL, ";");
+        sscanf(strtok(linha, ";"), "%d", &func.matricula);
+        sscanf(strtok(NULL, ";"), "%d", &func.status);
+        sscanf(strtok(NULL, ";"), "%s", func.nome);
+        sscanf(strtok(NULL, ";"), "%c", &func.estadoCivil);
+        sscanf(strtok(NULL, ";"), "%f", &func.salario);
 
         // exibe na tela os dados dos funcionarios importados
         printf("-----------------------------------------------\n");
@@ -368,13 +366,15 @@ int importarDados() {
         printf("SALARIO = %f\n", func.salario);
         
         // Grava as informações no arquivo.
-        fwrite(&func, sizeof(func), 1, fp);
+        fwrite(&func, sizeof(dados), 1, fp);
     }
 
 
     // Fecha os arquivos.
     fclose(fp);
     fclose(fi);
+
+    pausa();
 
     // Operação realizada com sucesso.
     return 1;
@@ -514,6 +514,7 @@ int menu(int *nivel) {
 
     int opcao;
 
+    limpaTela();
     coloreTela();
 
     if (*nivel == 1) {
@@ -654,6 +655,8 @@ int imprimeFunc(){
 
     // Fecha o arquivo após as operações.
     fclose(fp);
+
+    pausa();
 
     // Operação realizada com sucesso.
     return 1;
