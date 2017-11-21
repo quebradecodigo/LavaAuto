@@ -583,9 +583,10 @@ void realizarBackup(){
         return; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
     }
     tam = ftell(fp);
-    if(tam == 0)
+    if(tam == 0){
       printf("Arquivo de funcionarios vazio!\n");
-
+      return;
+    }
     char nomeArq[] = "funcionarios_bkp.dat";
     FILE *fbkp = fopen(nomeArq, "wb");
 
@@ -623,9 +624,10 @@ void restaurarBackup(){
 
     tam = ftell(fbkp);
 
-    if(tam == 0)
+    if(tam == 0){
       printf("Arquivo de Backup vazio!\n");
-
+      return;
+    }
     FILE *fp = fopen("funcionarios.dat", "wb");
 
     while (fread(&func, sizeof(func), 1, fbkp))
