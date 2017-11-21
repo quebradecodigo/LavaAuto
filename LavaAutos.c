@@ -68,7 +68,7 @@ void pausa();
 void limpaTela();
 void coloreTela();
 void excluirArquivo();
-void realizarBackup();
+int realizarBackup();
 void restaurarBackup();
 int leUsuarios(char user[], char pass[], int *nivel);
 int loginUsers();
@@ -400,7 +400,8 @@ int main(){
             break;
 
         case 8:
-            realizarBackup();
+            if (realizarBackup()) 
+                printf("Backup realizado =)\n");  
             break;
 
         case 9:
@@ -568,41 +569,47 @@ void excluirArquivo(){
     }
 }
 
-void realizarBackup(){
+int realizarBackup(){
 
     // Variável do tipo registro que recebe os dados de cada funcionário, gravados no arquivo.
     dados func;
     int tam;
 
-    // Ponteiro para o arquivo.
+    // Ponteiros paras os arquivos.
     FILE *fp = fopen("funcionarios.dat", "rb");
+    FILE *fbkp = fopen("funcionarios_bkp.dat", "wb+");
 
     // Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
     if(fp == NULL){
         printf("Arquivo de funcionarios nao existe!\n");
-        return; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
+        return 0; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
     }
+
+    fseek(fp, 0, SEEK_END);
     tam = ftell(fp);
+    rewind(fp);
+    
     if(tam == 0){
       printf("Arquivo de funcionarios vazio!\n");
-      return;
-    }
-    char nomeArq[] = "funcionarios_bkp.dat";
-    FILE *fbkp = fopen(nomeArq, "wb");
+      return 0;
+    }    
 
-    while (fread(&func, sizeof(func), 1, fp)){
-        fwrite(&func, sizeof(func), 1, fbkp);
+    while(fread(&func, sizeof(dados), 1, fp)) {
+        fwrite(&func, sizeof(dados), 1, fbkp);
     }
-    tam = ftell(fbkp);
 
-    if(tam == 0)
-      printf("Erro ao realizar backup!\n");
-     else
-        printf("Backup realizado com sucesso!\n");
+    rewind(fbkp);
+    fseek(fbkp, 0, SEEK_END);
+
+    if(ftell(fbkp) == 0) {
+        printf("Erro ao realizar backup!\n");  
+        return 0;     
+    }
 
     fclose(fp);
     fclose(fbkp);
 
+    return 1;
 }
 
 
