@@ -47,15 +47,15 @@ int main(){
 
     do{
         // Imprime o menu na tela e lê a opção escolhida pelo usuário.
-          
+
         opcaoMenu = menu(&nivel);
-                  
+
         switch(opcaoMenu) {
 
             // Cadastra um funcionário.
             case 1:
 
-                if (nivel == 1 || nivel == 2) {            
+                if (nivel == 1 || nivel == 2) {
                     resp = cadastraFunc();
 
                     // Verifica se o arquivo foi aberto corretamente.
@@ -73,7 +73,7 @@ int main(){
             // Altera dados de um funcionário.
             case 2:
 
-                if (nivel == 1 || nivel == 2) {  
+                if (nivel == 1 || nivel == 2) {
                     pos = pesquisaFunc();
                     // Verifica se o arquivo foi aberto corretamente.
                     if (pos >= 0){
@@ -93,7 +93,7 @@ int main(){
             // Exclui dados de um funcionário.
             case 3:
 
-                if (nivel == 1 || nivel == 2) { 
+                if (nivel == 1 || nivel == 2) {
                     pos = pesquisaFunc();
                     // Verifica se o arquivo foi aberto corretamente.
                     if (pos >= 0){
@@ -138,7 +138,7 @@ int main(){
 
         // Apaga fisicamente o arquivo.
         case 6:
-            if (nivel == 1) { 
+            if (nivel == 1) {
                 excluirArquivo();
             } else {
                 printf("Acesso negado!\n");
@@ -146,7 +146,7 @@ int main(){
         break;
 
         case 7:
-            if (nivel == 1) { 
+            if (nivel == 1) {
                 restaurarBackup();
             } else {
                 printf("Acesso negado!\n");
@@ -154,7 +154,7 @@ int main(){
         break;
 
         case 8:
-            if (nivel == 1) { 
+            if (nivel == 1) {
                 realizarBackup();
             } else {
                 printf("Acesso negado!\n");
@@ -173,7 +173,7 @@ int main(){
                 importarDados();
             } else {
                 printf("Acesso negado!\n");
-            }            
+            }
         break;
 
         case 0:
@@ -187,7 +187,7 @@ int main(){
         }
 
     } while(opcaoMenu != 0);
-    
+
     return 0;
 }
 
