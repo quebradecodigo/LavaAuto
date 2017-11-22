@@ -153,6 +153,8 @@ int importarDados() {
     // Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
     if(fp == NULL || fi == NULL){
         return 0; // Operação de abertura/criação do arquivo NÃO foi realizada com sucesso.
+    }else{
+      printf("O arquivo a ser importado nao existe");
     }
 
     fseek(fp, 0, SEEK_END);
@@ -345,7 +347,7 @@ int menu(int *nivel) {
         printf("\n\t\t 7 - Restaurar Backup");
         printf("\n\t\t 8 - Realizar Backup");
         printf("\n\t\t 9 - Cadastrar Usuarios");
-        printf("\n\t\t10- Importar dados");
+        printf("\n\t\t10 - Importar dados");
         printf("\n\t\t 0 - Sair");
     } else if (*nivel == 2) {
         printf("\n\tMenu de Opcoes Sistema Lava Autos - Gerente");
