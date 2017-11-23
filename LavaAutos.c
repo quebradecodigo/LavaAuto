@@ -61,11 +61,14 @@ int main(){
                     // Verifica se o arquivo foi aberto corretamente.
                     if(resp){
                         printf("\n\tCadastro realizado com sucesso!!!\n\n");
+                        pausa();
                     }else{
                         printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+                        pausa();
                     }
                 } else {
                     printf("Acesso negado!\n");
+                    pausa();
                 }
 
             break;
@@ -79,13 +82,17 @@ int main(){
                     if (pos >= 0){
                         alteraFunc(pos);
                         printf("\n\tO registro foi alterado com sucesso!\n\n");
+                        pausa();
                     }else if(pos == -1){
                         printf("\n\tNao foi encontrado o funcionario no arquivo!\n\n");
+                        pausa();
                     }else{
                         printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+                        pausa();
                     }
                 } else {
                     printf("Acesso negado!\n");
+                    pausa();
                 }
 
             break;
@@ -100,13 +107,17 @@ int main(){
                         consultaFunc(pos);
                         excluiFunc(pos);
                         printf("\n\tO registro foi excluido com sucesso!\n\n");
+                        pausa();
                     }else if(pos == -1){
                         printf("\n\tNao foi encontrado o funcionario no arquivo!\n\n");
+                        pausa();
                     }else{
                         printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+                        pausa();
                     }
                 } else {
                     printf("Acesso negado!\n");
+                    pausa();
                 }
 
             break;
@@ -119,8 +130,10 @@ int main(){
                 consultaFunc(pos);
             }else if(pos == -1){
                 printf("\n\tNao foi encontrado o funcionario no arquivo!\n\n");
+                pausa();
             }else{
                 printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+                pausa();
             }
         break;
 
@@ -131,8 +144,10 @@ int main(){
             // Verifica se o arquivo foi aberto corretamente.
             if(resp){
                 printf("\n\tImpressao realizada com sucesso!!!\n\n");
+                pausa();
             }else{
                 printf("\n\tErro ao abrir o arquivo! Verifique as configuracoes do arquivo!\n\n");
+                pausa();
             }
         break;
 
@@ -142,6 +157,7 @@ int main(){
                 excluirArquivo();
             } else {
                 printf("Acesso negado!\n");
+                pausa();
             }
         break;
 
@@ -150,6 +166,7 @@ int main(){
                 restaurarBackup();
             } else {
                 printf("Acesso negado!\n");
+                pausa();
             }
         break;
 
@@ -158,6 +175,7 @@ int main(){
                 realizarBackup();
             } else {
                 printf("Acesso negado!\n");
+                pausa();
             }
         break;
         case 9:
@@ -165,6 +183,7 @@ int main(){
                 cadastroUsers();
             } else {
                 printf("Acesso negado!\n");
+                pausa();
             }
         break;
 
@@ -173,6 +192,7 @@ int main(){
                 importarDados();
             } else {
                 printf("Acesso negado!\n");
+                pausa();
             }
         break;
 
@@ -184,10 +204,10 @@ int main(){
 
         default:
             printf("\n\tOpção invalida. Digite uma das opções acima!\n\n");
+            pausa();
         }
 
     } while(opcaoMenu != 0);
 
     return 0;
 }
-

@@ -117,6 +117,7 @@ int leUsuarios(char user[], char pass[], int *nivel){
     // Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
     if(fp == NULL){
         printf("Abertura do arquivo não foi realizada com sucesso!\n"); // Operação de abertura do arquivo NÃO foi realizada com sucesso.
+        pausa();
     }
     while (fread(&loginU, sizeof(login), 1, fp)){
         if((!strcmp(user, loginU.usuario)) && (!strcmp(pass,loginU.senha))){
@@ -155,6 +156,7 @@ int importarDados() {
         return 0; // Operação de abertura/criação do arquivo NÃO foi realizada com sucesso.
     }else{
       printf("O arquivo a ser importado nao existe");
+      pausa();
     }
 
     fseek(fp, 0, SEEK_END);
@@ -225,6 +227,7 @@ void excluirArquivo(){
 
     if (fp == NULL){
         printf("\n\tDesculpe! O arquivo nao foi encontrado.\n");
+        pausa();
     }else{
         getchar();
         printf("\n\tDeseja realmente excluir? (S=Sim/N=Nao): ");
@@ -233,6 +236,7 @@ void excluirArquivo(){
         if ((op == 's') || (op == 'S')){
             remove(nomeArq);
             printf("\n\tArquivo \"%s\" excluido! :-)\n\n", nomeArq);
+            pausa();
         }
     }
 }
@@ -250,6 +254,7 @@ int realizarBackup(){
     // Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
     if(fp == NULL){
         printf("Arquivo de funcionarios nao existe!\n");
+        pausa();
         return 0; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
     }
 
@@ -259,6 +264,7 @@ int realizarBackup(){
 
     if(tam == 0){
       printf("Arquivo de funcionarios vazio!\n");
+      pausa();
       return 0;
     }
 
@@ -271,6 +277,7 @@ int realizarBackup(){
 
     if(ftell(fbkp) == 0) {
         printf("Erro ao realizar backup!\n");
+        pausa();
         return 0;
     }
 
@@ -294,6 +301,7 @@ int restaurarBackup(){
     // Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
     if(fbkp == NULL){
       printf("Arquivo de backup nao existe!\n");
+      pausa();
         return 0; // Operação de abertura do arquivo NÃO foi realizada com sucesso.
     }
 
@@ -303,6 +311,7 @@ int restaurarBackup(){
 
     if(tam == 0){
       printf("Arquivo de Backup vazio!\n");
+      pausa();
       return 0;
     }
     FILE *fp = fopen("funcionarios.dat", "wb");
@@ -315,6 +324,7 @@ int restaurarBackup(){
 
     if(ftell(fp) == 0) {
         printf("Erro ao realizar backup!\n");
+        pausa();
         return 0;
     } else
         printf("Restauracao realizada com sucesso!\n");
