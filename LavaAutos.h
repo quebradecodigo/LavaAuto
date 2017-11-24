@@ -153,10 +153,8 @@ int importarDados() {
 
     // Verifica se o arquivo foi aberto corretamente. Caso negativo, sai da função.
     if(fp == NULL || fi == NULL){
-        return 0; // Operação de abertura/criação do arquivo NÃO foi realizada com sucesso.
-    }else{
-      printf("O arquivo a ser importado nao existe");
-      pausa();
+      //pausa();
+      return 0; // Operação de abertura/criação do arquivo NÃO foi realizada com sucesso.
     }
 
     fseek(fp, 0, SEEK_END);

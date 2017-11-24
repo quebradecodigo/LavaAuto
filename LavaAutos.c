@@ -36,6 +36,7 @@
 int main(){
     int opcaoMenu, resp, pos;
     int nivel=1;
+    int impo=0;
 
     // Laço que mantém o programa em execução, com opções de menu para o usuário.
     //Casso não tenha o arquivo de usuarios comente o codigo dentro de Main e uso somente essa linha para cadastrar usuarios!
@@ -189,7 +190,13 @@ int main(){
 
         case 10:
             if (nivel == 1) {
-                importarDados();
+                impo = importarDados();
+                if(impo==0){
+                  printf("O arquivo a ser importado nao existe\n");
+                }else{
+                  printf("O arquivo importado\n");
+                }
+                pausa();
             } else {
                 printf("Acesso negado!\n");
                 pausa();
