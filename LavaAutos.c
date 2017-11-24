@@ -12,7 +12,7 @@
 
 /*
  * PERFIS DE USUÁRIOS DO SISTEMA:
- *	- Adminitrador
+ *	- Proprietario
  *	- Gerente
  *	- Operador
  */

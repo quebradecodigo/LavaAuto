@@ -33,7 +33,7 @@ typedef struct{
     char usuario[21];
     char senha[21];
 } login;
-//1 = Administrador
+//1 = Proprietario
 //2 = Gerente
 //3 = Operador
 
@@ -95,10 +95,10 @@ void cadastroUsers(){
     printf("Informe a senha: \n");
     scanf("%s",loginU.senha);
 
-    printf("Nivel de acesso 1 = Administrador - 2 = Gerente - 3 = Operador: \n");
+    printf("Nivel de acesso 1 = Proprietario - 2 = Gerente - 3 = Operador: \n");
     scanf("%d", &loginU.nivel);
 
-    //1 = Administrador
+    //1 = Proprietario
     //2 = Gerente
     //3 = Operador
 
@@ -323,7 +323,7 @@ int restaurarBackup(){
     fseek(fp, 0, SEEK_END);
 
     if(ftell(fp) == 0) {
-        printf("Erro ao realizar backup!\n");
+        printf("Erro ao realizar restauracao!\n");
         pausa();
         return 0;
     } else
@@ -347,7 +347,7 @@ int menu(int *nivel) {
     coloreTela();
 
     if (*nivel == 1) {
-        printf("\n\tMenu de Opcoes Sistema Lava Autos - Administrador");
+        printf("\n\tMenu de Opcoes Sistema Lava Autos - Proprietario");
         printf("\n\t\t 1 - Cadastrar");
         printf("\n\t\t 2 - Alterar");
         printf("\n\t\t 3 - Excluir");
